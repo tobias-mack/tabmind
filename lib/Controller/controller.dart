@@ -1,5 +1,3 @@
-import 'package:mvc_pattern/mvc_pattern.dart';
-
 import 'package:tabmind/controller_dependencies.dart';
 
 class Controller extends ControllerMVC {
@@ -14,6 +12,7 @@ class Controller extends ControllerMVC {
   /// Note, the count comes from a separate class, _Model.
   int get count => _model.counter;
 
+  Color get accentColor => _model.accentColor;
   // The Controller knows how to 'talk to' the Model and to the View (interface).
   void incrementCounter() {
     //

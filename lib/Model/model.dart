@@ -1,5 +1,3 @@
-
-
 import 'package:tabmind/model_dependencies.dart';
 
 class Model extends ModelMVC {
@@ -10,6 +8,9 @@ class Model extends ModelMVC {
 
   int get counter => _counter;
   int _counter = 12;
+
+  Color get accentColor => _accentColor;
+  final Color _accentColor = const Color(0xffec6667);
 
   int incrementCounter() => ++_counter;
 
