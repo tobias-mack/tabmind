@@ -1,4 +1,4 @@
-import 'package:tabmind/aview_dependencies.dart';
+import '../aview_dependencies.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key})
@@ -11,8 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends StateMVC<HomePage> {
-  int currentIndex = 0;
-
   //
   @override
   void initState() {
@@ -33,9 +31,7 @@ class _HomePageState extends StateMVC<HomePage> {
   }
 
   @override
-  Widget build(_) {
-    // Takes this state object as a dependency to an InheritedWidget.
-    // Only useful if buildInherited() is used instead of setState().
+  Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
@@ -68,20 +64,8 @@ class _HomePageState extends StateMVC<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
+        backgroundColor: con.accentColor,
         child: const Icon(Icons.add),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: con.accentColor,
-        currentIndex: currentIndex,
-        showUnselectedLabels: false,
-        onTap: (index) => setState(() => currentIndex = index),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.doorbell), label: 'Reminder'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: 'Calendar'),
-          BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Profiles'),
-        ],
       ),
     );
   }

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:tabmind/Controller/controller.dart';
-import 'aView/home.dart';
+import 'aView/main_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,12 +58,12 @@ class _MyAppState extends AppStateMVC<MyApp> {
   /// the built-in InheritedWidget.
   @override
   Widget buildChild(BuildContext context) => MaterialApp(
-        home: HomePage(key: UniqueKey()),
+        home: MainPage(key: UniqueKey()),
       );
 
   /// Deprecated. To be replaced by buildChild().
   @override
   Widget buildApp(BuildContext context) => MaterialApp(
-        home: HomePage(key: UniqueKey()),
+        home: MainPage(key: UniqueKey()),
       );
 }
