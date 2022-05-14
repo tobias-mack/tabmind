@@ -1,69 +1,122 @@
-
 import 'package:flutter/material.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:tabmind/Controller/controller.dart';
-import 'aView/main_view.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tabmind/pages/calendar/calendar_view.dart';
+import 'package:tabmind/pages/home/home_view.dart';
+import 'package:tabmind/pages/profiles/profiles_view.dart';
+import 'package:tabmind/pages/reminder/reminder_view.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  runApp(await buildApp());
 }
 
-class MyApp extends AppStatefulWidgetMVC {
+Future<Widget> buildApp() async {
+  return UncontrolledProviderScope(
+    container: ProviderContainer(),
+    child: const MyApp(),
+  );
+}
+
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return const MaterialApp(
+      home: MainView(),
+    );
+  }
+}
+
+
+class MainView extends StatefulWidget {
+  const MainView({Key? key}) : super(key: key);
+
+  @override
+  _MainViewState createState() => _MainViewState();
+}
+
+class _MainViewState extends State<MainView> {
+  int _currentIndex = 0;
+
+  final _homeScreen = GlobalKey<NavigatorState>();
+  final _reminderScreen = GlobalKey<NavigatorState>();
+  final _calendarScreen = GlobalKey<NavigatorState>();
+  final _profilesScreen = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      )
+    return Scaffold(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: <Widget>[
+          Navigator(
+            key: _homeScreen,
+            onGenerateRoute: (route) => MaterialPageRoute(
+              settings: route,
+              builder: (context) => const HomeView(),
+            ),
+          ),
+          Navigator(
+            key: _reminderScreen,
+            onGenerateRoute: (route) => MaterialPageRoute(
+              settings: route,
+              builder: (context) => const ReminderView(),
+            ),
+          ),
+          Navigator(
+            key: _calendarScreen,
+            onGenerateRoute: (route) => MaterialPageRoute(
+              settings: route,
+              builder: (context) => const CalendarView(),
+            ),
+          ),
+          Navigator(
+            key: _profilesScreen,
+            onGenerateRoute: (route) => MaterialPageRoute(
+              settings: route,
+              builder: (context) => const ProfilesView(),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
+        onTap: (val) => _onTap(val, context),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.doorbell), label: 'Reminder'),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: 'Calendar'),
+          BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Profiles'),
+        ],
+      ),
     );
   }
 
-  @override
-  AppStateMVC createState() => _MyAppState();
-}
-
-class _MyAppState extends AppStateMVC<MyApp> {
-  //
-  factory _MyAppState() => _this ??= _MyAppState._();
-
-  _MyAppState._()
-      : super(
-          controller: Controller(),
-          /// Demonstrate passing an 'object' down the Widget tree much like
-          /// in the Scoped Model
-          object: 'Hello!',
-        );
-  static _MyAppState? _this;
-
-  /// Try these different 'build' functions and get access
-  /// to a built-in FutureBuilder and or a 'app leve' InheritedWidget.
-  /// Override build() and stay with the traditional Flutter approach.
-  // @override
-  // Widget build(BuildContext context) => MaterialApp(
-  //   home: Page1(key: UniqueKey()),
-  // );
-
-  /// Override buildWidget() and implement initAsync() and use a FutureBuilder
-  /// to perform asynchronous operations while the app starts up.
-  // @override
-  // Widget buildWidget(BuildContext context) => MaterialApp(
-  //       home: Page1(key: UniqueKey()),
-  //     );
-
-  /// Override buildChild() to use the FutureBuilder again but also
-  /// the built-in InheritedWidget.
-  @override
-  Widget buildChild(BuildContext context) => MaterialApp(
-        home: MainPage(key: UniqueKey()),
-      );
-
-  /// Deprecated. To be replaced by buildChild().
-  @override
-  Widget buildApp(BuildContext context) => MaterialApp(
-        home: MainPage(key: UniqueKey()),
-      );
+  void _onTap(int val, BuildContext context) {
+    if (_currentIndex == val) {
+      switch (val) {
+        case 0:
+          _homeScreen.currentState?.popUntil((route) => route.isFirst);
+          break;
+        case 1:
+          _reminderScreen.currentState?.popUntil((route) => route.isFirst);
+          break;
+        case 2:
+          _calendarScreen.currentState?.popUntil((route) => route.isFirst);
+          break;
+        case 3:
+          _profilesScreen.currentState?.popUntil((route) => route.isFirst);
+          break;
+        default:
+      }
+    } else {
+      if (mounted) {
+        setState(() {
+          _currentIndex = val;
+        });
+      }
+    }
+  }
 }
