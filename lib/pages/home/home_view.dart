@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tabmind/main.dart';
 
 import '../../common/providers.dart';
 import '../../util/AppColors.dart';
@@ -27,13 +28,25 @@ class HomeView extends ConsumerWidget {
         ),
         centerTitle: true,
       ),
-      body: const Text("HOME"),
       floatingActionButton: const FloatingActionButton(
         onPressed: null,
         tooltip: 'tooltip',
         backgroundColor: accentColor,
         child: Icon(Icons.add),
       ),
+      body: Column(children: [ TextFormField(
+        initialValue: 'Name',
+        maxLength: 20,
+        decoration: const InputDecoration(
+          constraints: BoxConstraints(maxHeight: 50, maxWidth: 100),
+          border: OutlineInputBorder(
+            borderSide: BorderSide (color: accentColor)
+          ),
+          labelText: 'Name',
+        ),
+      ),
+      ],)
+
     );
 
   }

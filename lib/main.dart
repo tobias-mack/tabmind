@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tabmind/pages/calendar/calendar_view.dart';
+import 'package:tabmind/pages/creationPage/creationPage_view.dart';
 import 'package:tabmind/pages/home/home_view.dart';
 import 'package:tabmind/pages/profiles/profiles_view.dart';
 import 'package:tabmind/pages/reminder/reminder_view.dart';
@@ -35,6 +36,11 @@ class MainView extends StatefulWidget {
   _MainViewState createState() => _MainViewState();
 }
 
+/*ElevatedButton(
+onPressed:  () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => SecondRoute()));},
+child: Text('Navigate to a new screen >>', style: TextStyle(fontSize: 24.0),),
+),*/
+
 class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
 
@@ -60,7 +66,7 @@ class _MainViewState extends State<MainView> {
             key: _reminderScreen,
             onGenerateRoute: (route) => MaterialPageRoute(
               settings: route,
-              builder: (context) => const ReminderView(),
+              builder: (context) => const CreationPageView(),
             ),
           ),
           Navigator(
@@ -120,3 +126,24 @@ class _MainViewState extends State<MainView> {
     }
   }
 }
+/*
+class SecondRoute extends StatelessWidget {
+  const SecondRoute({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Go back!'),
+        ),
+      ),
+    );
+  }
+}*/
