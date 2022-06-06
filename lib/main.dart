@@ -4,7 +4,7 @@ import 'package:tabmind/pages/calendar/calendar_view.dart';
 import 'package:tabmind/pages/creationPage/creationPage_view.dart';
 import 'package:tabmind/pages/home/home_view.dart';
 import 'package:tabmind/pages/profiles/profiles_view.dart';
-import 'package:tabmind/pages/reminder/reminder_view.dart';
+import 'package:tabmind/pages/reminderPage/reminderPage_view.dart';
 
 void main() async {
   runApp(await buildApp());

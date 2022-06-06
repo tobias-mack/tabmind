@@ -47,8 +47,8 @@ class CreationPageView extends ConsumerWidget {
 //   }
 // }
       body: Container(
-        width: 300,
-        color: Color.fromARGB(100, 200, 200, 200),
+        //width: 300,
+        //color: Color.fromARGB(100, 200, 200, 200),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           //          verticalDirection: VerticalDirection.up,
@@ -59,7 +59,7 @@ class CreationPageView extends ConsumerWidget {
           children: [
             TextFormField(
               initialValue: 'Input text',
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Name of Reminder',
                 border: OutlineInputBorder(),
               ),
@@ -73,7 +73,7 @@ class CreationPageView extends ConsumerWidget {
 
             TextFormField(
               initialValue: 'Input text',
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Details/Notes',
                 border: OutlineInputBorder(),
               ),
@@ -86,7 +86,7 @@ class CreationPageView extends ConsumerWidget {
               onPressed: () {
                 // Respond to button press
               },
-              child: Text("Create"),
+              child: const Text("Create"),
             ),
           ],
         ),
