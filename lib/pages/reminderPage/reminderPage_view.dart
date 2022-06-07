@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../util/AppColors.dart';
+import 'reminderPage_model.dart';
 
 
 class ReminderView extends ConsumerWidget {
@@ -32,4 +33,8 @@ class ReminderView extends ConsumerWidget {
     );
 
   }
+}
+
+abstract class ReminderPageController extends StateNotifier<ReminderPageModel> {
+  ReminderPageController(ReminderPageModel state) : super(state);
 }
