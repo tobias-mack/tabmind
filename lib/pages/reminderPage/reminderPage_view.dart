@@ -5,16 +5,13 @@ import '../../util/AppColors.dart';
 import 'reminderPage_model.dart';
 
 
-class ReminderPageView extends ConsumerWidget {
+class ReminderPageView extends StatefulWidget {
   const ReminderPageView({Key? key}) : super(key: key);
-
-
-
   @override
-  _ReminderViewState createState() => _ReminderViewState();
+  _ReminderPageViewState createState() => _ReminderPageViewState();
 }
 
-class _ReminderViewState extends State<ReminderView> {
+class _ReminderPageViewState extends State<ReminderPageView> {
   List<bool> _values = [true, false, true, false, false];
 
   Widget build(BuildContext context) {
