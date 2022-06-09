@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tabmind/pages/creationPage/creationPage_view.dart';
 
 import '../../util/AppColors.dart';
 import 'reminderPage_model.dart';
@@ -27,8 +28,8 @@ class _ReminderPageViewState extends State<ReminderPageView> {
         ),
         centerTitle: true,
       ),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
+      floatingActionButton: FloatingActionButton(
+        onPressed:  () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreationPageView()));},
         tooltip: 'tooltip',
         backgroundColor: accentColor,
         child: Icon(Icons.add),
