@@ -5,8 +5,8 @@ import '../../util/AppColors.dart';
 import 'reminderPage_model.dart';
 
 
-class ReminderView extends ConsumerWidget {
-  const ReminderView({Key? key}) : super(key: key);
+class ReminderPageView extends ConsumerWidget {
+  const ReminderPageView({Key? key}) : super(key: key);
 
 
 
