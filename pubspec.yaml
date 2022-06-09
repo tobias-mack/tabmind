@@ -69,7 +69,7 @@ flutter:
     - assets/tabmind-logos/Logo-Red-removedbg.png
     - assets/tabmind-logos/Logo-Pill-Black-removedbg.png
     - assets/tabmind-logos/Logo-Pill-Red-removedbg.png
-  #   - images/a_dot_ham.jpeg
+    - assets/images/bell.PNG
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
