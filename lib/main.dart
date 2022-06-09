@@ -4,6 +4,7 @@ import 'package:tabmind/pages/calendar/calendar_view.dart';
 import 'package:tabmind/pages/home/home_view.dart';
 import 'package:tabmind/pages/profiles/profiles_view.dart';
 import 'package:tabmind/pages/reminder/reminder_view.dart';
+import 'package:tabmind/util/AppColors.dart';
 
 void main() async {
   runApp(await buildApp());
@@ -21,8 +22,25 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const MaterialApp(
+    return MaterialApp(
       home: MainView(),
+      themeMode: ThemeMode.light,
+      darkTheme: ThemeData(
+        scaffoldBackgroundColor: Colors.black,
+        brightness: Brightness.dark,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.white10,
+          type: BottomNavigationBarType.fixed,
+          selectedLabelStyle: TextStyle(
+            fontSize: 12,
+          ),
+          unselectedLabelStyle: TextStyle(
+            fontSize: 12,
+          ),
+          selectedItemColor: accentColor,
+          unselectedItemColor: Colors.white38,
+        ),
+      ),
     );
   }
 }
@@ -82,6 +100,7 @@ class _MainViewState extends State<MainView> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
+        selectedItemColor: accentColor,
         onTap: (val) => _onTap(val, context),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         items: const [
