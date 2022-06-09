@@ -4,7 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../util/AppColors.dart';
 import 'reminderPage_model.dart';
 
-class ReminderView extends StatefulWidget {
+
+class ReminderPageView extends ConsumerWidget {
+  const ReminderPageView({Key? key}) : super(key: key);
+
+
+
   @override
   _ReminderViewState createState() => _ReminderViewState();
 }
@@ -55,9 +60,13 @@ class _ReminderViewState extends State<ReminderView> {
         ],
       ),
     );
+
   }
 }
 
 abstract class ReminderPageController extends StateNotifier<ReminderPageModel> {
   ReminderPageController(ReminderPageModel state) : super(state);
+
+  void addReminder();
+
 }
