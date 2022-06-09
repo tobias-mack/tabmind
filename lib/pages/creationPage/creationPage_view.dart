@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tabmind/pages/reminderPage/reminderPage_view.dart';
 
 import '../../common/providers.dart';
 import '../../util/AppColors.dart';
@@ -25,6 +26,15 @@ class CreationPageView extends ConsumerWidget {
             image: AssetImage('assets/tabmind-logos/Logo-Black-removedbg.png'),
             width: 120,
             height: 50,
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: accentColor,
+            onPressed: () {
+              Navigator.pop(
+                context
+              );
+            },
           ),
           centerTitle: true,
         ),
