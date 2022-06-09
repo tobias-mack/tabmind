@@ -37,4 +37,7 @@ class ReminderView extends ConsumerWidget {
 
 abstract class ReminderPageController extends StateNotifier<ReminderPageModel> {
   ReminderPageController(ReminderPageModel state) : super(state);
+
+  void addReminder();
+
 }
