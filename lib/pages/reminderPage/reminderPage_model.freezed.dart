@@ -22,6 +22,7 @@ mixin _$ReminderPageModel {
   String get importance => throw _privateConstructorUsedError;
   String get details => throw _privateConstructorUsedError;
   TimeOfDay get timeOfDay => throw _privateConstructorUsedError;
+  bool get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ReminderPageModelCopyWith<ReminderPageModel> get copyWith =>
@@ -39,7 +40,8 @@ abstract class $ReminderPageModelCopyWith<$Res> {
       String frequency,
       String importance,
       String details,
-      TimeOfDay timeOfDay});
+      TimeOfDay timeOfDay,
+      bool status});
 }
 
 /// @nodoc
@@ -59,6 +61,7 @@ class _$ReminderPageModelCopyWithImpl<$Res>
     Object? importance = freezed,
     Object? details = freezed,
     Object? timeOfDay = freezed,
+    Object? status = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -85,6 +88,10 @@ class _$ReminderPageModelCopyWithImpl<$Res>
           ? _value.timeOfDay
           : timeOfDay // ignore: cast_nullable_to_non_nullable
               as TimeOfDay,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -102,7 +109,8 @@ abstract class _$$_ReminderPageModelCopyWith<$Res>
       String frequency,
       String importance,
       String details,
-      TimeOfDay timeOfDay});
+      TimeOfDay timeOfDay,
+      bool status});
 }
 
 /// @nodoc
@@ -124,6 +132,7 @@ class __$$_ReminderPageModelCopyWithImpl<$Res>
     Object? importance = freezed,
     Object? details = freezed,
     Object? timeOfDay = freezed,
+    Object? status = freezed,
   }) {
     return _then(_$_ReminderPageModel(
       name: name == freezed
@@ -150,6 +159,10 @@ class __$$_ReminderPageModelCopyWithImpl<$Res>
           ? _value.timeOfDay
           : timeOfDay // ignore: cast_nullable_to_non_nullable
               as TimeOfDay,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -163,7 +176,8 @@ class _$_ReminderPageModel implements _ReminderPageModel {
       required this.frequency,
       required this.importance,
       required this.details,
-      required this.timeOfDay});
+      required this.timeOfDay,
+      required this.status});
 
   @override
   final String name;
@@ -177,10 +191,12 @@ class _$_ReminderPageModel implements _ReminderPageModel {
   final String details;
   @override
   final TimeOfDay timeOfDay;
+  @override
+  final bool status;
 
   @override
   String toString() {
-    return 'ReminderPageModel(name: $name, dosis: $dosis, frequency: $frequency, importance: $importance, details: $details, timeOfDay: $timeOfDay)';
+    return 'ReminderPageModel(name: $name, dosis: $dosis, frequency: $frequency, importance: $importance, details: $details, timeOfDay: $timeOfDay, status: $status)';
   }
 
   @override
@@ -194,7 +210,8 @@ class _$_ReminderPageModel implements _ReminderPageModel {
             const DeepCollectionEquality()
                 .equals(other.importance, importance) &&
             const DeepCollectionEquality().equals(other.details, details) &&
-            const DeepCollectionEquality().equals(other.timeOfDay, timeOfDay));
+            const DeepCollectionEquality().equals(other.timeOfDay, timeOfDay) &&
+            const DeepCollectionEquality().equals(other.status, status));
   }
 
   @override
@@ -205,7 +222,8 @@ class _$_ReminderPageModel implements _ReminderPageModel {
       const DeepCollectionEquality().hash(frequency),
       const DeepCollectionEquality().hash(importance),
       const DeepCollectionEquality().hash(details),
-      const DeepCollectionEquality().hash(timeOfDay));
+      const DeepCollectionEquality().hash(timeOfDay),
+      const DeepCollectionEquality().hash(status));
 
   @JsonKey(ignore: true)
   @override
@@ -221,7 +239,8 @@ abstract class _ReminderPageModel implements ReminderPageModel {
       required final String frequency,
       required final String importance,
       required final String details,
-      required final TimeOfDay timeOfDay}) = _$_ReminderPageModel;
+      required final TimeOfDay timeOfDay,
+      required final bool status}) = _$_ReminderPageModel;
 
   @override
   String get name => throw _privateConstructorUsedError;
@@ -235,6 +254,8 @@ abstract class _ReminderPageModel implements ReminderPageModel {
   String get details => throw _privateConstructorUsedError;
   @override
   TimeOfDay get timeOfDay => throw _privateConstructorUsedError;
+  @override
+  bool get status => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ReminderPageModelCopyWith<_$_ReminderPageModel> get copyWith =>
