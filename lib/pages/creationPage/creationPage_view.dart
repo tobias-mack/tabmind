@@ -8,132 +8,143 @@ import '../../util/AppColors.dart';
 import 'creationPage_model.dart';
 
 
-class CreationPageView extends ConsumerWidget {
+class CreationPageView extends StatefulWidget {
   const CreationPageView({Key? key}) : super(key: key);
 
+  @override
+  State<CreationPageView> createState() => _CreationPageViewState();
+}
 
+class _CreationPageViewState extends State<CreationPageView> {
+  String dropdownValue = "Low";
+  String dropdownValue2 = "Select";
+
+  void dropdownCallback(String? selectedValue) {
+    if (selectedValue is String) {
+      setState(() {
+        dropdownValue = selectedValue;
+      });
+    }
+  }
+
+  void dropdownCallback2(String? selectedValue) {
+    if (selectedValue is String) {
+      setState(() {
+        dropdownValue2 = selectedValue;
+      });
+    }
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final CreationPageController controller =
-    ref.read(providers.creationPageControllerProvider.notifier);
-    final CreationPageModel model = ref.watch(providers.creationPageControllerProvider);
-
+  Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: const Image(
-            image: AssetImage('assets/tabmind-logos/Logo-Black-removedbg.png'),
-            width: 120,
-            height: 50,
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: accentColor,
-            onPressed: () {
-              Navigator.pop(
-                context
-              );
-            },
-          ),
-          centerTitle: true,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Image(
+          image: AssetImage('assets/tabmind-logos/Logo-Black-removedbg.png'),
+          width: 120,
+          height: 50,
         ),
-//         body:  Padding(
-//           padding: EdgeInsets.all(80),
-//           child: TextFormField(
-//             initialValue: 'Input text',
-//             decoration: const InputDecoration(
-//               labelText: 'Label text',
-//               errorText: 'Error message',
-//               border: OutlineInputBorder(),
-//               suffixIcon: Icon(
-//                 Icons.error,
-//               ),
-//             ),
-//           ),
-//         ),
-//     );
-//
-//   }
-// }
-      body: Container(
-        //width: 300,
-        //color: Color.fromARGB(100, 200, 200, 200),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: accentColor,
+          onPressed: () {
+            Navigator.pop(
+                context
+            );
+          },
+        ),
+        centerTitle: true,
+      ),
+      body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //          verticalDirection: VerticalDirection.up,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          //          textBaseline: TextBaseline.alphabetic,
-          //          mainAxisSize: MainAxisSize.min,
-
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
-              initialValue: 'Input text',
-              decoration: const InputDecoration(
+              initialValue: '',
+              decoration: InputDecoration(
                 labelText: 'Name of Reminder',
                 border: OutlineInputBorder(),
               ),
             ),
 
-            MyStatefulWidget(),
-
-            MyStatefulWidget(),
-
-            MyStatefulWidget(),
+            TextFormField(
+              initialValue: '',
+              decoration: InputDecoration(
+                labelText: 'Dosis',
+                border: OutlineInputBorder(),
+              ),
+            ),
 
             TextFormField(
-              initialValue: 'Input text',
-              decoration: const InputDecoration(
+              initialValue: '',
+              decoration: InputDecoration(
+                labelText: 'Frequency',
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+            Text("Select Importance:"),
+            DropdownButton(
+              items: const [
+                DropdownMenuItem(child: Text("Low"), value: "Low"),
+                DropdownMenuItem(child: Text("High"), value: "High"),
+              ],
+              value: dropdownValue,
+              onChanged: dropdownCallback,
+              // Customizatons
+              //iconSize: 42.0,
+              //iconEnabledColor: Colors.green,
+              //icon: const Icon(Icons.flutter_dash),
+              //isExpanded: true,
+              style: const TextStyle(
+                color: Colors.black,
+              ),
+            ),
+
+            TextFormField(
+              initialValue: '',
+              decoration: InputDecoration(
                 labelText: 'Details/Notes',
                 border: OutlineInputBorder(),
               ),
             ),
-            MyStatefulWidget(),
 
-            //hier eigentlich Time picker Widget
-
+            Text("Select Daytime:"),
+            DropdownButton(
+              items: const [
+                DropdownMenuItem(child: Text("Morning"), value: "Morning"),
+                DropdownMenuItem(child: Text("Midday"), value: "Midday"),
+                DropdownMenuItem(child: Text("Night"), value: "Night"),
+                DropdownMenuItem(child: Text("Select"), value: "Select"),
+              ],
+              value: dropdownValue2,
+              onChanged: dropdownCallback2,
+              // Customizatons
+              //iconSize: 42.0,
+              //iconEnabledColor: Colors.green,
+              //icon: const Icon(Icons.flutter_dash),
+              //isExpanded: true,
+              style: const TextStyle(
+                color: Colors.black,
+              ),
+            ),
+            TextFormField(
+              initialValue: '',
+              decoration: InputDecoration(
+                labelText: 'Details/Notes',
+                border: OutlineInputBorder(),
+              ),
+            ),
             OutlinedButton(
               onPressed: () {
                 // Respond to button press
               },
-              child: const Text("Create"),
+              child: Text("Create"),
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  String dropdownValue = 'One';
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Colors.black),
-      onChanged: (String? newValue) {
-        setState(() {
-          dropdownValue = newValue!;
-        });
-      },
-      items: <String>['One', 'Two', 'Free', 'Four']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
     );
   }
 }
