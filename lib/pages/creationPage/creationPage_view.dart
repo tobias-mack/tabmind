@@ -18,6 +18,7 @@ class CreationPageView extends StatefulWidget {
 class _CreationPageViewState extends State<CreationPageView> {
   String dropdownValue = "Low";
   String dropdownValue2 = "Select";
+  TimeOfDay _time = TimeOfDay.now();
 
   void dropdownCallback(String? selectedValue) {
     if (selectedValue is String) {
@@ -31,6 +32,18 @@ class _CreationPageViewState extends State<CreationPageView> {
     if (selectedValue is String) {
       setState(() {
         dropdownValue2 = selectedValue;
+      });
+    }
+  }
+
+  void _selectTime() async {
+    final TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: _time,
+    );
+    if (newTime != null) {
+      setState(() {
+        _time = newTime;
       });
     }
   }
@@ -129,13 +142,16 @@ class _CreationPageViewState extends State<CreationPageView> {
                 color: Colors.black,
               ),
             ),
-            TextFormField(
-              initialValue: '',
-              decoration: InputDecoration(
-                labelText: 'Details/Notes',
-                border: OutlineInputBorder(),
-              ),
+
+            ElevatedButton(
+              onPressed: _selectTime,
+              child: Text('SELECT TIME'),
             ),
+            SizedBox(height: 8),
+            Text(
+              'Selected time: ${_time.format(context)}',
+            ),
+
             OutlinedButton(
               onPressed: () {
                 // Respond to button press
@@ -152,3 +168,4 @@ class _CreationPageViewState extends State<CreationPageView> {
 abstract class CreationPageController extends StateNotifier<CreationPageModel> {
   CreationPageController(CreationPageModel state) : super(state);
 }
+
