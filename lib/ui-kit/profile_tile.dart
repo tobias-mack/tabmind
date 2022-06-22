@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../util/AppColors.dart';
 
-class ProfileTile extends StatelessWidget {
+class ProfileTile extends StatefulWidget {
   final String name;
   bool switcher;
 
   ProfileTile(this.name, this.switcher, {Key? key}) : super(key: key);
 
   @override
+  _ProfileTileState createState() => _ProfileTileState();
+}
+
+
+class _ProfileTileState extends State<ProfileTile> {
+
+
   Widget build(BuildContext context) {
 
   return GestureDetector(
@@ -20,19 +27,19 @@ class ProfileTile extends StatelessWidget {
     padding: const EdgeInsets.all(10.0),
     child: ListTile(
               title: Text(
-                name,
+                widget.name,
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1!
                     ,
               ),
               trailing: Switch(
-                value: switcher,
+                value: widget.switcher,
                 activeColor: accentColor,
                 onChanged: (bool value) {
-                  //setState(() {
-                  //  _values[i] = value;
-                  //});
+                  setState(() {
+                    widget.switcher = value;
+                  });
                 },
               ),
             ),),

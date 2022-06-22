@@ -14,7 +14,6 @@ class ProfilesView extends StatefulWidget {
 }
 
 class _ProfilesViewState extends State<ProfilesView> {
-  List<bool> _values = [true, false, true, false, false];
   List<ProfileTile> list = [
     ProfileTile("Profile 1", true),
     ProfileTile("Profile 2", true),
