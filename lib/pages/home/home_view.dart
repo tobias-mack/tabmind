@@ -155,18 +155,6 @@ class HomeView extends ConsumerWidget {
         backgroundColor: accentColor,
         child: Icon(Icons.add),
       ),
-      body: Column(children: [ TextFormField(
-        initialValue: 'Name',
-        maxLength: 20,
-        decoration: const InputDecoration(
-          constraints: BoxConstraints(maxHeight: 50, maxWidth: 100),
-          border: OutlineInputBorder(
-            borderSide: BorderSide (color: accentColor)
-          ),
-          labelText: 'Name',
-        ),
-      ),
-      ],)
 
     );
   }
