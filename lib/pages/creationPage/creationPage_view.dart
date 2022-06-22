@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tabmind/pages/reminderPage/reminderPage_view.dart';
-
-import '../../common/providers.dart';
 import '../../util/AppColors.dart';
 import 'creationPage_model.dart';
 
@@ -146,6 +143,7 @@ class _CreationPageViewState extends State<CreationPageView> {
                 //iconEnabledColor: Colors.green,
                 //icon: const Icon(Icons.flutter_dash),
                 //isExpanded: true,
+                //itemHeight: 50.0,
                 style: const TextStyle(
                   color: Colors.black,
                 ),
@@ -154,9 +152,11 @@ class _CreationPageViewState extends State<CreationPageView> {
             Padding(
               padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
               child: ElevatedButton(
-                onPressed: _selectTime,
-                child: Text('SELECT TIME'),
-              ),
+                  onPressed: _selectTime,
+                  child: Text('SELECT TIME'),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(accentColor))),
             ),
             SizedBox(height: 8),
             Padding(
@@ -172,6 +172,7 @@ class _CreationPageViewState extends State<CreationPageView> {
                   // Respond to button press
                 },
                 child: Text("Create"),
+
               ),
             ),
           ],
