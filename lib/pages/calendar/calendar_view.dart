@@ -66,12 +66,6 @@ class CalendarView extends ConsumerWidget {
         //    style: Theme.of(context).textTheme.headline6,
         //  ),
         //),
-        floatingActionButton: const FloatingActionButton(
-          onPressed: null,
-          tooltip: 'tooltip',
-          backgroundColor: accentColor,
-          child: Icon(Icons.add),
-        ),
       ),
     );
   }
