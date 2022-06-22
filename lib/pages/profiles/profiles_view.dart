@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tabmind/pages/profiles/profiles_model.dart';
 
 import '../../util/AppColors.dart';
 
@@ -32,4 +33,8 @@ class ProfilesView extends ConsumerWidget {
     );
 
   }
+}
+
+abstract class ProfilesController extends StateNotifier<ProfilesModel> {
+  ProfilesController(ProfilesModel state) : super(state);
 }
