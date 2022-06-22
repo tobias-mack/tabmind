@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:tabmind/ui-kit/calendar_table.dart';
 
 import '../../common/providers.dart';
 import '../../util/AppColors.dart';
@@ -7,6 +9,8 @@ import 'calendar_model.dart';
 
 class CalendarView extends ConsumerWidget {
   const CalendarView({Key? key}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,16 +46,16 @@ class CalendarView extends ConsumerWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: <Widget>[
             Center(
-              child: Text("It's cloudy here"),
+              child: CalendarTable(),
             ),
             Center(
-              child: Text("It's rainy here"),
+              child: CalendarTable(),
             ),
             Center(
-              child: Text("It's sunny here"),
+              child: CalendarTable(),
             ),
           ],
         ),
