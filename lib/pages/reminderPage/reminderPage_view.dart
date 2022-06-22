@@ -71,7 +71,7 @@ class _ReminderPageViewState extends State<ReminderPageView> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text("Your Profiles",
+                    child: Text("Your Reminders",
                         style: Theme.of(context).textTheme.headline6),
                   ),
                   for (int i = 0; i <= list1.length - 1; i++)
@@ -85,7 +85,7 @@ class _ReminderPageViewState extends State<ReminderPageView> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text("Your Profiles",
+                    child: Text("Your Reminders",
                         style: Theme.of(context).textTheme.headline6),
                   ),
                   for (int i = 0; i <= list2.length - 1; i++)
@@ -98,7 +98,7 @@ class _ReminderPageViewState extends State<ReminderPageView> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text("Your Profiles",
+                    child: Text("Your Reminders",
                         style: Theme.of(context).textTheme.headline6),
                   ),
                   for (int i = 0; i <= list3.length - 1; i++)
