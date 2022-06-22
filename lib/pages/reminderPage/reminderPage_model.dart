@@ -14,5 +14,6 @@ class ReminderPageModel with _$ReminderPageModel {
     required String importance,
     required String details,
     required TimeOfDay timeOfDay,
+    required bool status,
   }) = _ReminderPageModel;
 }

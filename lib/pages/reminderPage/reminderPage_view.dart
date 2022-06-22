@@ -65,6 +65,6 @@ class _ReminderPageViewState extends State<ReminderPageView> {
 abstract class ReminderPageController extends StateNotifier<ReminderPageModel> {
   ReminderPageController(ReminderPageModel state) : super(state);
 
-  void addReminder();
+  void addReminder(String name, String dosis, String frequency, String details, String importance, TimeOfDay timeOfDay, bool status){}
 
 }
