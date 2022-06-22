@@ -46,6 +46,7 @@ class _CreationPageViewState extends State<CreationPageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Image(
@@ -63,119 +64,121 @@ class _CreationPageViewState extends State<CreationPageView> {
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-              child: TextFormField(
-                initialValue: '',
-                decoration: InputDecoration(
-                  labelText: 'Name of Reminder',
-                  border: OutlineInputBorder(),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                child: TextFormField(
+                  initialValue: '',
+                  decoration: InputDecoration(
+                    labelText: 'Name of Reminder',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-              child: TextFormField(
-                initialValue: '',
-                decoration: InputDecoration(
-                  labelText: 'Dosis',
-                  border: OutlineInputBorder(),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                child: TextFormField(
+                  initialValue: '',
+                  decoration: InputDecoration(
+                    labelText: 'Dosis',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 10),
-              child: TextFormField(
-                initialValue: '',
-                decoration: InputDecoration(
-                  labelText: 'Frequency',
-                  border: OutlineInputBorder(),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 10),
+                child: TextFormField(
+                  initialValue: '',
+                  decoration: InputDecoration(
+                    labelText: 'Frequency',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
-            ),
-            Text("Select Importance:"),
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
-              child: DropdownButton(
-                items: const [
-                  DropdownMenuItem(child: Text("Low"), value: "Low"),
-                  DropdownMenuItem(child: Text("High"), value: "High"),
-                ],
-                value: dropdownValue,
-                onChanged: dropdownCallback,
-                // Customizatons
-                //iconSize: 42.0,
-                //iconEnabledColor: Colors.green,
-                //icon: const Icon(Icons.flutter_dash),
-                //isExpanded: true,
-                style: const TextStyle(
-                  color: Colors.black,
+              Text("Select Importance:"),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
+                child: DropdownButton(
+                  items: const [
+                    DropdownMenuItem(child: Text("Low"), value: "Low"),
+                    DropdownMenuItem(child: Text("High"), value: "High"),
+                  ],
+                  value: dropdownValue,
+                  onChanged: dropdownCallback,
+                  // Customizatons
+                  //iconSize: 42.0,
+                  //iconEnabledColor: Colors.green,
+                  //icon: const Icon(Icons.flutter_dash),
+                  //isExpanded: true,
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 10),
-              child: TextFormField(
-                initialValue: '',
-                decoration: InputDecoration(
-                  labelText: 'Details/Notes',
-                  border: OutlineInputBorder(),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 10),
+                child: TextFormField(
+                  initialValue: '',
+                  decoration: InputDecoration(
+                    labelText: 'Details/Notes',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
-            ),
-            Text("Select Daytime:"),
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
-              child: DropdownButton(
-                items: const [
-                  DropdownMenuItem(child: Text("Morning"), value: "Morning"),
-                  DropdownMenuItem(child: Text("Midday"), value: "Midday"),
-                  DropdownMenuItem(child: Text("Night"), value: "Night"),
-                  DropdownMenuItem(child: Text("Select"), value: "Select"),
-                ],
-                value: dropdownValue2,
-                onChanged: dropdownCallback2,
-                // Customizatons
-                //iconSize: 42.0,
-                //iconEnabledColor: Colors.green,
-                //icon: const Icon(Icons.flutter_dash),
-                //isExpanded: true,
-                //itemHeight: 50.0,
-                style: const TextStyle(
-                  color: Colors.black,
+              Text("Select Daytime:"),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
+                child: DropdownButton(
+                  items: const [
+                    DropdownMenuItem(child: Text("Morning"), value: "Morning"),
+                    DropdownMenuItem(child: Text("Midday"), value: "Midday"),
+                    DropdownMenuItem(child: Text("Night"), value: "Night"),
+                    DropdownMenuItem(child: Text("Select"), value: "Select"),
+                  ],
+                  value: dropdownValue2,
+                  onChanged: dropdownCallback2,
+                  // Customizatons
+                  //iconSize: 42.0,
+                  //iconEnabledColor: Colors.green,
+                  //icon: const Icon(Icons.flutter_dash),
+                  //isExpanded: true,
+                  //itemHeight: 50.0,
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
-              child: ElevatedButton(
-                  onPressed: _selectTime,
-                  child: Text('SELECT TIME'),
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(accentColor))),
-            ),
-            SizedBox(height: 8),
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
-              child: Text(
-                'Selected time: ${_time.format(context)}',
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+                child: ElevatedButton(
+                    onPressed: _selectTime,
+                    child: Text('SELECT TIME'),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(accentColor))),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
-              child: OutlinedButton(
-                onPressed: () {
-                  // Respond to button press
-                },
-                child: Text("Create"),
-
+              SizedBox(height: 8),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                child: Text(
+                  'Selected time: ${_time.format(context)}',
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+                child: OutlinedButton(
+                  onPressed: () {
+                    // Respond to button press
+                  },
+                  child: Text("Create"),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
