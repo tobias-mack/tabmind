@@ -156,7 +156,7 @@ class _CreationPageViewState extends State<CreationPageView> {
                   child: Text('SELECT TIME'),
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.green))),
+                          MaterialStateProperty.all<Color>(accentColor))),
             ),
             SizedBox(height: 8),
             Padding(
@@ -172,6 +172,7 @@ class _CreationPageViewState extends State<CreationPageView> {
                   // Respond to button press
                 },
                 child: Text("Create"),
+
               ),
             ),
           ],
