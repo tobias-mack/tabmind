@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tabmind/main.dart';
 
 import '../../common/providers.dart';
 import '../../ui-kit/reminder_tile.dart';
@@ -154,6 +155,19 @@ class HomeView extends ConsumerWidget {
         backgroundColor: accentColor,
         child: Icon(Icons.add),
       ),
+      body: Column(children: [ TextFormField(
+        initialValue: 'Name',
+        maxLength: 20,
+        decoration: const InputDecoration(
+          constraints: BoxConstraints(maxHeight: 50, maxWidth: 100),
+          border: OutlineInputBorder(
+            borderSide: BorderSide (color: accentColor)
+          ),
+          labelText: 'Name',
+        ),
+      ),
+      ],)
+
     );
   }
 }
