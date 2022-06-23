@@ -14,7 +14,7 @@ class ReminderDetailsView extends StatefulWidget {
 
 class _ReminderDetailsViewState extends State<ReminderDetailsView> {
   String dropdownValue = "Low";
-  String dropdownValue2 = "Select";
+  String dropdownValue2 = "Morning";
   TimeOfDay _time = TimeOfDay.now();
 
   void dropdownCallback(String? selectedValue) {
@@ -84,7 +84,7 @@ class _ReminderDetailsViewState extends State<ReminderDetailsView> {
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                 child: TextFormField(
-                  initialValue: '',
+                  initialValue: '200mg',
                   decoration: InputDecoration(
                     labelText: 'Dosis',
                     border: OutlineInputBorder(),
@@ -94,7 +94,7 @@ class _ReminderDetailsViewState extends State<ReminderDetailsView> {
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 5, 20, 10),
                 child: TextFormField(
-                  initialValue: '',
+                  initialValue: '3x',
                   decoration: InputDecoration(
                     labelText: 'Frequency',
                     border: OutlineInputBorder(),
@@ -139,7 +139,7 @@ class _ReminderDetailsViewState extends State<ReminderDetailsView> {
                     DropdownMenuItem(child: Text("Morning"), value: "Morning"),
                     DropdownMenuItem(child: Text("Midday"), value: "Midday"),
                     DropdownMenuItem(child: Text("Night"), value: "Night"),
-                    DropdownMenuItem(child: Text("Select"), value: "Select"),
+                    DropdownMenuItem(child: Text("Night"), value: "Night"),
                   ],
                   value: dropdownValue2,
                   onChanged: dropdownCallback2,

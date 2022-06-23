@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabmind/pages/reminderPage/reminderPage_view.dart';
 
 class ReminderTile extends StatelessWidget {
   final AssetImage image;
@@ -14,7 +15,8 @@ class ReminderTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        //TODO: route to profile reminders
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ReminderPageView()));
       },
       child: Column(
         children: [
