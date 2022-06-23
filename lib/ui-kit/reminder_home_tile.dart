@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabmind/pages/reminderDetails/reminderDetails_view.dart';
 import 'package:tabmind/pages/reminderPage/reminderPage_view.dart';
 
 import '../util/AppColors.dart';
@@ -15,12 +16,10 @@ class ReminderHomeTile extends StatefulWidget {
 class _ReminderHomeTileState extends State<ReminderHomeTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
-
       onTap: () {
         //TODO: route to profile reminders
-        //Navigator.of(context)
-        //    .push(MaterialPageRoute(builder: (context) => ReminderPageView()));
-        //showResults(context, index);
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ReminderDetailsView(widget.name)));
       },
         child: ListTile(
           title: Container(
