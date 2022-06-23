@@ -24,7 +24,7 @@ class ReminderTile extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.black,
-                width: 2,
+                width: 1.5,
               ),
               borderRadius: BorderRadius.circular(15),
             ),
