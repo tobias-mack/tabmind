@@ -60,7 +60,7 @@ class _ProfilesViewState extends State<ProfilesView> {
 
   void addProfile() {
     setState(() {
-      list.add(ProfileTile("name", false));
+      list.add(ProfileTile("Profilname", false));
     });
   }
 }

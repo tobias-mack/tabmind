@@ -26,12 +26,13 @@ class _ProfileTileState extends State<ProfileTile> {
     Padding(
     padding: const EdgeInsets.all(10.0),
     child: ListTile(
-              title: Text(
-                widget.name,
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    ,
+              title:
+              TextFormField(
+                initialValue: widget.name,
+                decoration: InputDecoration(
+                  labelText: '',
+                  border: OutlineInputBorder(),
+                ),
               ),
               trailing: Switch(
                 value: widget.switcher,
