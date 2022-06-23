@@ -41,19 +41,19 @@ class _ProfilesViewState extends State<ProfilesView> {
         backgroundColor: accentColor,
         child: Icon(Icons.add),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text("Your Profiles",
-                style: Theme.of(context).textTheme.headline6),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.only(left: 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 10, top: 20),
+              child: Text("Your Profiles",
+                  style: Theme.of(context).textTheme.headline6),
             ),
-
-          for (int i = 0; i <= list.length - 1; i++)
-            list[i]
-
-        ],
+            for (int i = 0; i <= list.length - 1; i++) list[i]
+          ],
+        ),
       ),
     );
   }
