@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tabmind/main.dart';
+import 'package:tabmind/ui-kit/reminder_home_tile.dart';
 
 import '../../common/providers.dart';
+import '../../ui-kit/profile_tile.dart';
 import '../../ui-kit/reminder_tile.dart';
 import '../../util/AppColors.dart';
 import 'home_model.dart';
 
-class HomeView extends ConsumerWidget {
+class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final HomeController controller =
-        ref.read(providers.homeControllerProvider.notifier);
-    final HomeModel model = ref.watch(providers.homeControllerProvider);
+  State<HomeView> createState() => _HomeViewState();
+}
+
+
+class _HomeViewState extends State<HomeView> {
+  List<ReminderHomeTile> list = [
+    ReminderHomeTile("Fentanyl"),
+    ReminderHomeTile("Ibuprofen"),
+    ReminderHomeTile("Dopamin"),
+    ReminderHomeTile("Johanniskraut"),
+    ReminderHomeTile("Atorvastatin"),
+    ReminderHomeTile("Johanniskraut"),
+    ReminderHomeTile("Ibuprofen"),
+    ReminderHomeTile("Paracetamol"),
+    ReminderHomeTile("Lisinopril"),
+  ];
+
+  Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
@@ -117,6 +132,8 @@ class HomeView extends ConsumerWidget {
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                               ),
+                              for (int i = 0; i <= list.length - 1; i++)
+                                list[i]
                             ],
                           ),
                           SizedBox(height: 16),

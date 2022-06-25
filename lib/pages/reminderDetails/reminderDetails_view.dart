@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../util/AppColors.dart';
-import 'creationPage_model.dart';
+import 'reminderDetails_model.dart';
 
-class CreationPageView extends StatefulWidget {
-  const CreationPageView({Key? key}) : super(key: key);
+class ReminderDetailsView extends StatefulWidget {
+  final String name;
+
+  const ReminderDetailsView(this.name, {Key? key}) : super(key: key);
 
   @override
-  State<CreationPageView> createState() => _CreationPageViewState();
+  State<ReminderDetailsView> createState() => _ReminderDetailsViewState();
 }
 
-class _CreationPageViewState extends State<CreationPageView> {
+class _ReminderDetailsViewState extends State<ReminderDetailsView> {
   String dropdownValue = "Low";
-  String dropdownValue2 = "Select";
+  String dropdownValue2 = "Morning";
   TimeOfDay _time = TimeOfDay.now();
 
   void dropdownCallback(String? selectedValue) {
@@ -72,7 +74,7 @@ class _CreationPageViewState extends State<CreationPageView> {
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                 child: TextFormField(
-                  initialValue: '',
+                  initialValue: widget.name,
                   decoration: InputDecoration(
                     labelText: 'Name of Reminder',
                     border: OutlineInputBorder(),
@@ -82,7 +84,7 @@ class _CreationPageViewState extends State<CreationPageView> {
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                 child: TextFormField(
-                  initialValue: '',
+                  initialValue: '200mg',
                   decoration: InputDecoration(
                     labelText: 'Dosis',
                     border: OutlineInputBorder(),
@@ -92,7 +94,7 @@ class _CreationPageViewState extends State<CreationPageView> {
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 5, 20, 10),
                 child: TextFormField(
-                  initialValue: '',
+                  initialValue: '3x',
                   decoration: InputDecoration(
                     labelText: 'Frequency',
                     border: OutlineInputBorder(),
@@ -137,7 +139,7 @@ class _CreationPageViewState extends State<CreationPageView> {
                     DropdownMenuItem(child: Text("Morning"), value: "Morning"),
                     DropdownMenuItem(child: Text("Midday"), value: "Midday"),
                     DropdownMenuItem(child: Text("Night"), value: "Night"),
-                    DropdownMenuItem(child: Text("Select"), value: "Select"),
+                    DropdownMenuItem(child: Text("Night"), value: "Night"),
                   ],
                   value: dropdownValue2,
                   onChanged: dropdownCallback2,
@@ -174,7 +176,7 @@ class _CreationPageViewState extends State<CreationPageView> {
                   onPressed: () {
                     // Respond to button press
                   },
-                  child: Text("Create"),
+                  child: Text("Save"),
                 ),
               ),
             ],
@@ -185,6 +187,6 @@ class _CreationPageViewState extends State<CreationPageView> {
   }
 }
 
-abstract class CreationPageController extends StateNotifier<CreationPageModel> {
-  CreationPageController(CreationPageModel state) : super(state);
+abstract class ReminderDetailsController extends StateNotifier<ReminderDetailsModel> {
+  ReminderDetailsController(ReminderDetailsModel state) : super(state);
 }
