@@ -28,7 +28,7 @@ class Providers {
 
   final StateNotifierProvider<CreationPageController, CreationPageModel>
       creationPageControllerProvider = StateNotifierProvider<CreationPageController, CreationPageModel>(
-          (StateNotifierProviderRef ref) => CreationPageControllerImplementation());
+          (StateNotifierProviderRef ref) => CreationPageControllerImplementation(id: '0'));
 
   final StateNotifierProvider<ReminderPageController, ReminderPageModel>
       reminderPageControllerProvider = StateNotifierProvider<ReminderPageController, ReminderPageModel>(
@@ -41,5 +41,12 @@ class Providers {
   final StateNotifierProvider<ProfilesController, ProfilesModel>
   profilesControllerProvider = StateNotifierProvider<ProfilesController, ProfilesModel>(
           (StateNotifierProviderRef ref) => ProfilesControllerImplementation());
+
+  final StateNotifierProviderFamily<CreationPageController, CreationPageModel,
+  String> creationPageControllerProviderFamily = StateNotifierProvider.family<CreationPageController, CreationPageModel, String>(
+      (StateNotifierProviderRef ref, String id) =>
+          CreationPageControllerImplementation(
+            id: id,
+          ));
 
 }

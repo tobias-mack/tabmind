@@ -84,7 +84,7 @@ class _MainViewState extends State<MainView> {
             key: _reminderScreen,
             onGenerateRoute: (route) => MaterialPageRoute(
               settings: route,
-              builder: (context) => const ReminderPageView(),
+              builder: (context) => ReminderPageView(),
             ),
           ),
           Navigator(

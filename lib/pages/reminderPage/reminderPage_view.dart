@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tabmind/pages/creationPage/creationPage_view.dart';
 
+import '../../common/providers.dart';
 import '../../ui-kit/calendar_table.dart';
 import '../../ui-kit/profile_tile.dart';
 import '../../util/AppColors.dart';
+import '../creationPage/creationPage_model.dart';
 import 'reminderPage_model.dart';
 
 
-class ReminderPageView extends StatefulWidget {
-  const ReminderPageView({Key? key}) : super(key: key);
-  @override
-  _ReminderPageViewState createState() => _ReminderPageViewState();
-}
+class ReminderPageView extends ConsumerWidget {
+   ReminderPageView({Key? key}) : super(key: key);
 
-class _ReminderPageViewState extends State<ReminderPageView> {
   List<ProfileTile> list1 = [
     ProfileTile("Ibuprofen", true),
     ProfileTile("Paracetamol", true),
@@ -32,7 +30,12 @@ class _ReminderPageViewState extends State<ReminderPageView> {
 
   ];
 
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final CreationPageController controller =
+    ref.read(providers.creationPageControllerProviderFamily("1").notifier);
+    final CreationPageModel model =
+    ref.watch(providers.creationPageControllerProviderFamily("1"));
+
     final int count = 4; //Anzahl an Switches
 
     return DefaultTabController(
@@ -98,8 +101,16 @@ class _ReminderPageViewState extends State<ReminderPageView> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text("Your Reminders",
-                        style: Theme.of(context).textTheme.headline6),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        showDialog(context: context, builder: (context) {
+                          return AlertDialog(
+                            content: Text(controller.showReminder()),
+                          );
+                        });
+                      },
+                      child: const Text("Create"),
+                    ),
                   ),
                   for (int i = 0; i <= list3.length - 1; i++)
                     list3[i]

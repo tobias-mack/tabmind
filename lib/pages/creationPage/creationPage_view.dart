@@ -1,50 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tabmind/common/providers.dart';
 import '../../util/AppColors.dart';
 import 'creationPage_model.dart';
 
-class CreationPageView extends StatefulWidget {
-  const CreationPageView({Key? key}) : super(key: key);
+class CreationPageView extends ConsumerWidget {
+  CreationPageView({Key? key}) : super(key: key);
+
+  final controllerName = TextEditingController();
+  final controllerDosis = TextEditingController();
+  final controllerFrequency = TextEditingController();
+  final controllerNotes = TextEditingController();
+
 
   @override
-  State<CreationPageView> createState() => _CreationPageViewState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final CreationPageController controller =
+        ref.read(providers.creationPageControllerProviderFamily("1").notifier);
+    final CreationPageModel model =
+        ref.watch(providers.creationPageControllerProviderFamily("1"));
 
-class _CreationPageViewState extends State<CreationPageView> {
-  String dropdownValue = "Low";
-  String dropdownValue2 = "Select";
-  TimeOfDay _time = TimeOfDay.now();
-
-  void dropdownCallback(String? selectedValue) {
-    if (selectedValue is String) {
-      setState(() {
-        dropdownValue = selectedValue;
-      });
-    }
-  }
-
-  void dropdownCallback2(String? selectedValue) {
-    if (selectedValue is String) {
-      setState(() {
-        dropdownValue2 = selectedValue;
-      });
-    }
-  }
-
-  void _selectTime() async {
-    final TimeOfDay? newTime = await showTimePicker(
-      context: context,
-      initialTime: _time,
-    );
-    if (newTime != null) {
-      setState(() {
-        _time = newTime;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -65,116 +40,85 @@ class _CreationPageViewState extends State<CreationPageView> {
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(30),
+          padding: const EdgeInsets.all(30),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                child: TextFormField(
-                  initialValue: '',
-                  decoration: InputDecoration(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                child: TextField(
+                  controller: controllerName,
+                  decoration: const InputDecoration(
                     labelText: 'Name of Reminder',
                     border: OutlineInputBorder(),
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                child: TextFormField(
-                  initialValue: '',
-                  decoration: InputDecoration(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                child: TextField(
+                  controller: controllerDosis,
+                  decoration: const InputDecoration(
                     labelText: 'Dosis',
                     border: OutlineInputBorder(),
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 10),
-                child: TextFormField(
-                  initialValue: '',
-                  decoration: InputDecoration(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
+                child: TextField(
+                  controller: controllerFrequency,
+                  decoration: const InputDecoration(
                     labelText: 'Frequency',
                     border: OutlineInputBorder(),
                   ),
                 ),
               ),
-              Text("Select Importance:"),
-              Padding(
+              const Text("Select Importance:"),
+              const Padding(
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
-                child: DropdownButton(
-                  items: const [
-                    DropdownMenuItem(child: Text("Low"), value: "Low"),
-                    DropdownMenuItem(child: Text("High"), value: "High"),
-                  ],
-                  value: dropdownValue,
-                  onChanged: dropdownCallback,
-                  // Customizatons
-                  //iconSize: 42.0,
-                  //iconEnabledColor: Colors.green,
-                  //icon: const Icon(Icons.flutter_dash),
-                  //isExpanded: true,
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
+                child: Dropdown1()
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 10),
-                child: TextFormField(
-                  initialValue: '',
-                  decoration: InputDecoration(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
+                child: TextField(
+                  controller: controllerNotes,
+                  decoration: const InputDecoration(
                     labelText: 'Details/Notes',
                     border: OutlineInputBorder(),
                   ),
                 ),
               ),
-              Text("Select Daytime:"),
-              Padding(
+              const Text("Select Daytime:"),
+              const Padding(
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
-                child: DropdownButton(
-                  items: const [
-                    DropdownMenuItem(child: Text("Morning"), value: "Morning"),
-                    DropdownMenuItem(child: Text("Midday"), value: "Midday"),
-                    DropdownMenuItem(child: Text("Night"), value: "Night"),
-                    DropdownMenuItem(child: Text("Select"), value: "Select"),
-                  ],
-                  value: dropdownValue2,
-                  onChanged: dropdownCallback2,
-                  // Customizatons
-                  //iconSize: 42.0,
-                  //iconEnabledColor: Colors.green,
-                  //icon: const Icon(Icons.flutter_dash),
-                  //isExpanded: true,
-                  //itemHeight: 50.0,
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
+                child: Dropdown2()
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
-                child: ElevatedButton(
-                    onPressed: _selectTime,
-                    child: Text('SELECT TIME'),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(accentColor))),
+                child: TimeSelect()
               ),
-              SizedBox(height: 8),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+              const SizedBox(height: 8),
+             /* Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                 child: Text(
                   'Selected time: ${_time.format(context)}',
                 ),
-              ),
+              ),*/
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
                 child: OutlinedButton(
                   onPressed: () {
-                    // Respond to button press
+                    // TODO: add importance and daytime select functionality
+                    controller.addReminder(controllerName.text, controllerDosis.text, controllerFrequency.text, controllerNotes.text, Dropdown2State().dropdownValue2, TimeSelectState()._time, true);
+
+                    showDialog(context: context, builder: (context) {
+                      return const AlertDialog(
+                        content: Text("Reminder Successfully Added"),
+                      );
+                    });
                   },
-                  child: Text("Create"),
+                  child: const Text("Create"),
                 ),
               ),
             ],
@@ -185,6 +129,127 @@ class _CreationPageViewState extends State<CreationPageView> {
   }
 }
 
+
+class Dropdown1 extends StatefulWidget {
+  const Dropdown1({Key? key}) : super(key: key);
+
+  @override
+  Dropdown1State createState() => Dropdown1State();
+}
+
+class Dropdown1State extends State<Dropdown1> {
+  @override
+
+  String dropdownValue = "Low";
+  String dropdownValue2 = "Select";
+
+  void dropdownCallback(String? selectedValue) {
+    if (selectedValue is String) {
+      setState(() {
+        dropdownValue = selectedValue;
+      });
+    }
+  }
+  Widget build(BuildContext context) {
+    return DropdownButton(
+        items: const [
+          DropdownMenuItem(child: Text("Low"), value: "Low"),
+          DropdownMenuItem(child: Text("High"), value: "High"),
+      ],
+      value: dropdownValue,
+      onChanged: dropdownCallback,
+      // Customizatons
+      //iconSize: 42.0,
+      //iconEnabledColor: Colors.green,
+      //icon: const Icon(Icons.flutter_dash),
+      //isExpanded: true,
+      style: const TextStyle(
+        color: Colors.black,
+      ),
+    );
+  }
+}
+
+
+class Dropdown2 extends StatefulWidget {
+  const Dropdown2({Key? key}) : super(key: key);
+
+  @override
+  Dropdown2State createState() => Dropdown2State();
+}
+
+class Dropdown2State extends State<Dropdown2> {
+  @override
+
+  String dropdownValue2 = "Select";
+
+  void dropdownCallback2(String? selectedValue) {
+    if (selectedValue is String) {
+      setState(() {
+        dropdownValue2 = selectedValue;
+      });
+    }
+  }
+  Widget build(BuildContext context) {
+    return DropdownButton(
+      items: const [
+        DropdownMenuItem(child: Text("Morning"), value: "Morning"),
+        DropdownMenuItem(child: Text("Midday"), value: "Midday"),
+        DropdownMenuItem(child: Text("Night"), value: "Night"),
+        DropdownMenuItem(child: Text("Select"), value: "Select"),
+      ],
+      value: dropdownValue2,
+      onChanged: dropdownCallback2,
+      // Customizatons
+      //iconSize: 42.0,
+      //iconEnabledColor: Colors.green,
+      //icon: const Icon(Icons.flutter_dash),
+      //isExpanded: true,
+      //itemHeight: 50.0,
+      style: const TextStyle(
+        color: Colors.black,
+      ),
+    );
+  }
+}
+
+class TimeSelect extends StatefulWidget {
+  const TimeSelect({Key? key}) : super(key: key);
+
+  @override
+  TimeSelectState createState() => TimeSelectState();
+}
+
+class TimeSelectState extends State<TimeSelect> {
+  @override
+
+  TimeOfDay _time = TimeOfDay.now();
+
+
+  void _selectTime() async {
+    final TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: _time,
+    );
+    if (newTime != null) {
+      setState(() {
+        _time = newTime;
+      });
+    }
+  }
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: _selectTime,
+        child: const Text('SELECT TIME'),
+        style: ButtonStyle(
+            backgroundColor:
+            MaterialStateProperty.all<Color>(accentColor)));
+  }
+}
+
 abstract class CreationPageController extends StateNotifier<CreationPageModel> {
   CreationPageController(CreationPageModel state) : super(state);
+
+  void addReminder(String name, String dosis, String frequency, String details, String importance, TimeOfDay timeOfDay, bool status) {}
+  String showReminder();
 }
