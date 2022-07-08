@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tabmind/pages/creationPage/creationPage_view.dart';
 
 import '../../common/providers.dart';
-import '../../ui-kit/calendar_table.dart';
 import '../../ui-kit/profile_tile.dart';
 import '../../util/AppColors.dart';
 import '../creationPage/creationPage_model.dart';
@@ -40,7 +39,7 @@ class ReminderPageView extends ConsumerWidget {
 
     return DefaultTabController(
       initialIndex: 1,
-      length: 3,
+      length: list1.length,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -50,72 +49,33 @@ class ReminderPageView extends ConsumerWidget {
             height: 50,
           ),
           centerTitle: true,
-          bottom: const TabBar(
+          bottom: TabBar(
             labelColor: Colors.black,
             indicatorColor: accentColor,
             tabs: <Widget>[
-              Tab(
-                text: "Profil 1",
-              ),
-              Tab(
-                text: "Profil 2",
-              ),
-              Tab(
-                text: "Profil 3",
-              ),
+              for (int i = 0; i <= list1.length - 1; i++)
+                Tab(
+                  text: "Profil 1" + i.toString(),
+                ),
             ],
           ),
         ),
         body: TabBarView(
           children: <Widget>[
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text("Your Reminders",
-                        style: Theme.of(context).textTheme.headline6),
-                  ),
-                  for (int i = 0; i <= list1.length - 1; i++)
-                    list1[i]
-                ],
-              ),
-            ),
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text("Your Reminders",
-                        style: Theme.of(context).textTheme.headline6),
-                  ),
-                  for (int i = 0; i <= list2.length - 1; i++)
-                    list2[i]
-                ],
-              ),            ),
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: OutlinedButton(
-                      onPressed: () {
-                        showDialog(context: context, builder: (context) {
-                          return AlertDialog(
-                            content: Text(controller.showReminder()),
-                          );
-                        });
-                      },
-                      child: const Text("Create"),
+            for (int i = 0; i <= list1.length - 1; i++)
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text("Your Reminders",
+                          style: Theme.of(context).textTheme.headline6),
                     ),
-                  ),
-                  for (int i = 0; i <= list3.length - 1; i++)
-                    list3[i]
-                ],
-              ),            ),
+                    for (int i = 0; i <= list1.length - 1; i++) list1[i]
+                  ],
+                ),
+              ),
           ],
         ),
 

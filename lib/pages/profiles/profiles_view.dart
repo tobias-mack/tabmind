@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tabmind/pages/profiles/profiles_model.dart';
@@ -6,22 +8,15 @@ import '../../common/providers.dart';
 import '../../ui-kit/profile_tile.dart';
 import '../../util/AppColors.dart';
 
-class ProfilesView extends StatefulWidget {
+class ProfilesView extends ConsumerWidget {
   const ProfilesView({Key? key}) : super(key: key);
 
   @override
-  State<ProfilesView> createState() => _ProfilesViewState();
-}
-
-class _ProfilesViewState extends State<ProfilesView> {
-  List<ProfileTile> list = [
-    ProfileTile("Profile 1", true),
-    ProfileTile("Profile 2", true),
-    ProfileTile("Profile 3", false),
-  ];
-
-  Widget build(BuildContext context) {
-    final int count = 4; //Anzahl an Switches
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ProfilesController controller =
+        ref.read(providers.profilesControllerProvider.notifier);
+    final List<ProfilesModel> model =
+        ref.watch(providers.profilesControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +30,8 @@ class _ProfilesViewState extends State<ProfilesView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          addProfile();
+          controller
+              .addProfile("profil" + Random().nextInt(1233333).toString());
         },
         tooltip: 'tooltip',
         backgroundColor: accentColor,
@@ -51,20 +47,22 @@ class _ProfilesViewState extends State<ProfilesView> {
               child: Text("Your Profiles",
                   style: Theme.of(context).textTheme.headline6),
             ),
-            for (int i = 0; i <= list.length - 1; i++) list[i]
+            for (int i = 0; i <= model.length - 1; i++)
+              ProfileTile(model[i].profileName, model[i].active),
           ],
         ),
       ),
     );
   }
-
-  void addProfile() {
-    setState(() {
-      list.add(ProfileTile("Profilname", false));
-    });
-  }
 }
 
-abstract class ProfilesController extends StateNotifier<ProfilesModel> {
-  ProfilesController(ProfilesModel state) : super(state);
+
+abstract class ProfilesController extends StateNotifier<List<ProfilesModel>> {
+  ProfilesController(List<ProfilesModel> state) : super(state);
+
+  void addProfile(String name);
+
+  void removeProfile(String name);
+
+  void changeName(String name, String newName);
 }
