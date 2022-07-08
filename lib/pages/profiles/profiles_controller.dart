@@ -1,6 +1,6 @@
 import 'package:tabmind/pages/profiles/profiles_model.dart';
 import 'package:tabmind/pages/profiles/profiles_view.dart';
-
+import 'package:tabmind/ui-kit/reminder_home_tile.dart';
 
 class ProfilesControllerImplementation extends ProfilesController {
 
@@ -38,5 +38,17 @@ class ProfilesControllerImplementation extends ProfilesController {
     }
 
     state = newList;
+  }
+
+  @override
+  List<ReminderHomeTile> upcomingReminders() {
+    // TODO: implement upcomingReminders
+    return [];
+  }
+
+  @override
+  List<ReminderHomeTile> remindersToday() {
+    // TODO: implement remindersToday
+    return [];
   }
 }

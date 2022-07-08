@@ -1,35 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tabmind/main.dart';
 import 'package:tabmind/ui-kit/reminder_home_tile.dart';
 
 import '../../common/providers.dart';
-import '../../ui-kit/profile_tile.dart';
 import '../../ui-kit/reminder_tile.dart';
 import '../../util/AppColors.dart';
+import '../profiles/profiles_model.dart';
+import '../profiles/profiles_view.dart';
 import 'home_model.dart';
 
-class HomeView extends StatefulWidget {
+class HomeView extends ConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
+
   @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-
-class _HomeViewState extends State<HomeView> {
-  List<ReminderHomeTile> list = [
-    ReminderHomeTile("Fentanyl"),
-    ReminderHomeTile("Ibuprofen"),
-    ReminderHomeTile("Dopamin"),
-    ReminderHomeTile("Johanniskraut"),
-    ReminderHomeTile("Atorvastatin"),
-    ReminderHomeTile("Johanniskraut"),
-    ReminderHomeTile("Ibuprofen"),
-    ReminderHomeTile("Paracetamol"),
-    ReminderHomeTile("Lisinopril"),
-  ];
-
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ProfilesController controller =
+        ref.read(providers.profilesControllerProvider.notifier);
+    final List<ProfilesModel> model =
+        ref.watch(providers.profilesControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +36,7 @@ class _HomeViewState extends State<HomeView> {
             expandedHeight: 200,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                  "assets/images/background.jpg",
+                "assets/images/background.jpg",
                 width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
@@ -68,19 +56,6 @@ class _HomeViewState extends State<HomeView> {
                 SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Container(
-                    //decoration: BoxDecoration(
-                    //  gradient: LinearGradient(
-                    //    begin: Alignment.topCenter,
-                    //    end: Alignment.bottomCenter,
-                    //    colors: [
-                    //      Colors.black.withOpacity(.1),
-                    //      Colors.black.withOpacity(.9),
-                    //      Colors.black.withOpacity(1),
-                    //      Colors.black.withOpacity(1),
-                    //      Colors.black.withOpacity(1),
-                    //    ],
-                    //  ),
-                    //),
                     child: SafeArea(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,17 +80,17 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                                 child: Row(
                                   children: [
-                                    ReminderTile(
-                                        image: AssetImage("assets/images/bell.PNG"),
-                                        profileName: "Profile 1"),
-                                    SizedBox(width: 16),
-                                    ReminderTile(
-                                        image: AssetImage("assets/images/bell.PNG"),
-                                        profileName: "Profile 2"),
-                                    SizedBox(width: 16),
-                                    ReminderTile(
-                                        image: AssetImage("assets/images/bell.PNG"),
-                                        profileName: "Profile 3"),
+                                    for (int i = 0; i <= model.length - 1; i++)
+                                      Row(
+                                        children: [
+                                          ReminderTile(
+                                              image: const AssetImage(
+                                                  "assets/images/bell.PNG"),
+                                              profileName:
+                                                  model[i].profileName),
+                                          const SizedBox(width: 16),
+                                        ],
+                                      )
                                   ],
                                 ),
                               )
@@ -132,8 +107,9 @@ class _HomeViewState extends State<HomeView> {
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                               ),
-                              for (int i = 0; i <= list.length - 1; i++)
-                                list[i]
+                              for (ReminderHomeTile upcomingReminder
+                                  in controller.upcomingReminders())
+                                upcomingReminder
                             ],
                           ),
                           SizedBox(height: 16),
@@ -147,6 +123,9 @@ class _HomeViewState extends State<HomeView> {
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                               ),
+                              for (ReminderHomeTile upcomingReminder
+                                  in controller.remindersToday())
+                                upcomingReminder
                             ],
                           ),
                         ],
@@ -159,20 +138,12 @@ class _HomeViewState extends State<HomeView> {
           )
         ],
       ),
-
-
-
-
-
-
-
       floatingActionButton: const FloatingActionButton(
         onPressed: null,
         tooltip: 'tooltip',
         backgroundColor: accentColor,
         child: Icon(Icons.add),
       ),
-
     );
   }
 }

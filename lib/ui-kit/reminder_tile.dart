@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tabmind/pages/reminderPage/reminderPage_view.dart';
 
+import '../util/AppColors.dart';
+
 class ReminderTile extends StatelessWidget {
   final AssetImage image;
   final String profileName;
@@ -24,6 +26,19 @@ class ReminderTile extends StatelessWidget {
             width: 140,
             height: 140,
             decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  accentColor.withOpacity(.2),
+                  accentColor.withOpacity(.6),
+                  accentColor.withOpacity(.7),
+                  accentColor.withOpacity(.7),
+                  accentColor.withOpacity(.7),
+                  accentColor.withOpacity(.6),
+                  accentColor.withOpacity(.3),
+                ],
+              ),
               border: Border.all(
                 color: Colors.black,
                 width: 1.5,

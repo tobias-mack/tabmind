@@ -6,6 +6,7 @@ import 'package:tabmind/pages/profiles/profiles_model.dart';
 
 import '../../common/providers.dart';
 import '../../ui-kit/profile_tile.dart';
+import '../../ui-kit/reminder_home_tile.dart';
 import '../../util/AppColors.dart';
 
 class ProfilesView extends ConsumerWidget {
@@ -65,4 +66,8 @@ abstract class ProfilesController extends StateNotifier<List<ProfilesModel>> {
   void removeProfile(String name);
 
   void changeName(String name, String newName);
+
+  List<ReminderHomeTile> upcomingReminders();
+
+  List<ReminderHomeTile> remindersToday();
 }
