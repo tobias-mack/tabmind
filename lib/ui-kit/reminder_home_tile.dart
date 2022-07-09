@@ -1,33 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tabmind/pages/reminderDetails/reminderDetails_view.dart';
 
-class ReminderHomeTile extends StatefulWidget {
+import '../common/providers.dart';
+import '../pages/profiles/profiles_model.dart';
+import '../pages/profiles/profiles_view.dart';
+
+class ReminderHomeTile extends ConsumerWidget {
+  final String profilName;
   final String name;
   bool switcher;
 
-  ReminderHomeTile(this.name, this.switcher, {Key? key}) : super(key: key);
+  ReminderHomeTile(this.profilName, this.name, this.switcher, {Key? key})
+      : super(key: key);
 
   @override
-  _ReminderHomeTileState createState() => _ReminderHomeTileState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ProfilesController controller =
+        ref.read(providers.profilesControllerProvider.notifier);
+    final List<ProfilesModel> model =
+        ref.watch(providers.profilesControllerProvider);
 
-class _ReminderHomeTileState extends State<ReminderHomeTile> {
-  Widget build(BuildContext context) {
+    var reminder = controller.getReminder(profilName, name);
+
     return GestureDetector(
       onTap: () {
         //TODO: route to profile reminders
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => ReminderDetailsView(widget.name)));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ReminderDetailsView(profilName, reminder)));
       },
-        child: ListTile(
-          title: Container(
-            margin: const EdgeInsets.only(left: 10.0, bottom: 10.0),
-            padding: const EdgeInsets.all(10.0),
+      child: ListTile(
+        title: Container(
+          margin: const EdgeInsets.only(left: 10.0, bottom: 10.0),
+          padding: const EdgeInsets.all(10.0),
             decoration: myBoxDecoration(),
             child: Text(
-              widget.name,
-              style: Theme.of(context).textTheme.bodyText1!,
-            ),
+            name,
+            style: Theme.of(context).textTheme.headline6!,
+          ),
           ),
         ),
     );
@@ -36,11 +46,10 @@ class _ReminderHomeTileState extends State<ReminderHomeTile> {
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
       border: Border.all(
-          width: 1.5
-      ),
+          width: 1.0),
       borderRadius: BorderRadius.all(
-          Radius.circular(5.0) //                 <--- border radius here
-      ),
+          Radius.circular(15.0) //                 <--- border radius here
+          ),
     );
   }
 
