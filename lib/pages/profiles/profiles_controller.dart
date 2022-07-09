@@ -77,7 +77,7 @@ class ProfilesControllerImplementation extends ProfilesController {
     newReminderList.add(newReminder);
 
     for (ProfilesModel profile in state) {
-      if (profile.profileName == name) {
+      if (profile.profileName == profileName) {
         for (ReminderPageModel r in profile.reminders) {
           newReminderList.add(r);
         }
