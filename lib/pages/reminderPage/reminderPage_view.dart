@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tabmind/pages/creationPage/creationPage_view.dart';
+import 'package:tabmind/ui-kit/reminder_home_tile.dart';
 
 import '../../common/providers.dart';
-import '../../ui-kit/profile_tile.dart';
 import '../../util/AppColors.dart';
 import '../profiles/profiles_model.dart';
 import '../profiles/profiles_view.dart';
@@ -55,9 +55,8 @@ class ReminderPageView extends ConsumerWidget {
                         child: Text("Your Reminders",
                             style: Theme.of(context).textTheme.headline6),
                       ),
-                      for (int i = 0; i <= model.length - 1; i++)
-                        for (ReminderPageModel reminder in model[i].reminders)
-                          ProfileTile(reminder.name, reminder.status),
+                      for (ReminderPageModel reminder in model[i].reminders)
+                        ReminderHomeTile(reminder.name, reminder.status),
                       Padding(
                         padding: const EdgeInsets.only(top: 50, bottom: 50),
                         child: Column(

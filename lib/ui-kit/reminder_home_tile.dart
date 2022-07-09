@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tabmind/pages/reminderDetails/reminderDetails_view.dart';
-import 'package:tabmind/pages/reminderPage/reminderPage_view.dart';
-
-import '../util/AppColors.dart';
 
 class ReminderHomeTile extends StatefulWidget {
   final String name;
+  bool switcher;
 
-  ReminderHomeTile(this.name, {Key? key}) : super(key: key);
+  ReminderHomeTile(this.name, this.switcher, {Key? key}) : super(key: key);
 
   @override
   _ReminderHomeTileState createState() => _ReminderHomeTileState();
