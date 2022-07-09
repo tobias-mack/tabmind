@@ -1,3 +1,4 @@
+import 'package:flutter/src/material/time.dart';
 import 'package:tabmind/pages/profiles/profiles_model.dart';
 import 'package:tabmind/pages/profiles/profiles_view.dart';
 import 'package:tabmind/ui-kit/reminder_home_tile.dart';
@@ -50,5 +51,17 @@ class ProfilesControllerImplementation extends ProfilesController {
   List<ReminderHomeTile> remindersToday() {
     // TODO: implement remindersToday
     return [];
+  }
+
+  @override
+  void addReminder(
+      String profileName,
+      String name,
+      String dosis,
+      String frequency,
+      String details,
+      String importance,
+      TimeOfDay timeOfDay) {
+    // TODO: implement addReminder
   }
 }

@@ -36,10 +36,10 @@ class ProfilesView extends ConsumerWidget {
         },
         tooltip: 'tooltip',
         backgroundColor: accentColor,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(left: 0),
+        padding: const EdgeInsets.only(left: 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -57,7 +57,6 @@ class ProfilesView extends ConsumerWidget {
   }
 }
 
-
 abstract class ProfilesController extends StateNotifier<List<ProfilesModel>> {
   ProfilesController(List<ProfilesModel> state) : super(state);
 
@@ -70,4 +69,7 @@ abstract class ProfilesController extends StateNotifier<List<ProfilesModel>> {
   List<ReminderHomeTile> upcomingReminders();
 
   List<ReminderHomeTile> remindersToday();
+
+  void addReminder(String profileName, String name, String dosis,
+      String frequency, String details, String importance, TimeOfDay timeOfDay);
 }

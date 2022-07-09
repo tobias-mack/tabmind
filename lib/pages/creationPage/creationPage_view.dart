@@ -1,27 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tabmind/common/providers.dart';
+
 import '../../util/AppColors.dart';
+import '../profiles/profiles_model.dart';
+import '../profiles/profiles_view.dart';
 import 'creationPage_model.dart';
 
 class CreationPageView extends ConsumerWidget {
-  CreationPageView({Key? key}) : super(key: key);
+  String profileName;
+
+  CreationPageView(this.profileName, {Key? key}) : super(key: key);
 
   final controllerName = TextEditingController();
   final controllerDosis = TextEditingController();
   final controllerFrequency = TextEditingController();
   final controllerNotes = TextEditingController();
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final CreationPageController controller =
-        ref.read(providers.creationPageControllerProviderFamily("1").notifier);
-    final CreationPageModel model =
-        ref.watch(providers.creationPageControllerProviderFamily("1"));
+    final ProfilesController controller =
+        ref.read(providers.profilesControllerProvider.notifier);
+    final List<ProfilesModel> model =
+        ref.watch(providers.profilesControllerProvider);
+
+    //List<Widget> profileList = [];
+    //for(var i = 0; i < model.length; i++){
+    //  profileList.add(DropdownMenuItem(child: Text(model[i].profileName), value: model[i].profileName));
+    //}
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          controller.addReminder(
+              profileName,
+              controllerName.text,
+              controllerDosis.text,
+              controllerFrequency.text,
+              controllerNotes.text,
+              ImportanceState().dropdownValue,
+              TimeSelectState()._time);
+
+          showDialog(
+              context: context,
+              builder: (context) {
+                return const AlertDialog(
+                  content: Text("Reminder Successfully Added"),
+                );
+              });
+        },
+        tooltip: 'save',
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.check),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Image(
@@ -41,105 +73,144 @@ class CreationPageView extends ConsumerWidget {
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                child: TextField(
-                  controller: controllerName,
-                  decoration: const InputDecoration(
-                    labelText: 'Name of Reminder',
-                    border: OutlineInputBorder(),
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                  child: TextFormField(
+                    controller: controllerName,
+                    textInputAction: TextInputAction.next,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      } else if (value.length < 5) {
+                        return 'Please enter at least 5 characters';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Name of Reminder',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                child: TextField(
-                  controller: controllerDosis,
-                  decoration: const InputDecoration(
-                    labelText: 'Dosis',
-                    border: OutlineInputBorder(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                  child: TextFormField(
+                    controller: controllerDosis,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      labelText: 'Dosis',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
-                child: TextField(
-                  controller: controllerFrequency,
-                  decoration: const InputDecoration(
-                    labelText: 'Frequency',
-                    border: OutlineInputBorder(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
+                  child: TextFormField(
+                    controller: controllerFrequency,
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some number';
+                      } else if (int.parse(value) > 10) {
+                        return 'More than 10 intakes should not be possible';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Frequency',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
-              ),
-              const Text("Select Importance:"),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
-                child: Dropdown1()
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
-                child: TextField(
-                  controller: controllerNotes,
-                  decoration: const InputDecoration(
-                    labelText: 'Details/Notes',
-                    border: OutlineInputBorder(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
+                  child: TextField(
+                    controller: controllerNotes,
+                    decoration: const InputDecoration(
+                      labelText: 'Details/Notes',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
-              ),
-              const Text("Select Daytime:"),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
-                child: Dropdown2()
-              ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
-                child: TimeSelect()
-              ),
-              const SizedBox(height: 8),
-             /* Padding(
+                const Text("Select Importance:"),
+                const Padding(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
+                    child: Dropdown1()),
+                //const Text("Select Daytime:"),
+                //const Padding(
+                //  padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
+                //  child: Dropdown2()
+                //),TODO: calculate daytime from given time
+                const Padding(
+                    padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+                    child: TimeSelect()),
+                const SizedBox(height: 8),
+                /* Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                 child: Text(
                   'Selected time: ${_time.format(context)}',
                 ),
               ),*/
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
-                child: OutlinedButton(
-                  onPressed: () {
-                    // TODO: add importance and daytime select functionality
-                    controller.addReminder(controllerName.text, controllerDosis.text, controllerFrequency.text, controllerNotes.text, Dropdown2State().dropdownValue2, TimeSelectState()._time, true);
-
-                    showDialog(context: context, builder: (context) {
-                      return const AlertDialog(
-                        content: Text("Reminder Successfully Added"),
-                      );
-                    });
-                  },
-                  child: const Text("Create"),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-}
 
+  validateName(CreationPageView creationPageView) {}
+
+//getFAB(ProfilesController controller, BuildContext context) {
+//  if (controllerName.text.isEmpty) {
+//    return FloatingActionButton(
+//      onPressed: () {},
+//      backgroundColor: Colors.red,
+//      child: const Icon(Icons.clear_rounded),
+//    );
+//  } else {
+//    FloatingActionButton(
+//      onPressed: () {
+//        controller.addReminder(
+//            controllerName.text,
+//            controllerDosis.text,
+//            controllerFrequency.text,
+//            controllerNotes.text,
+//            ImportanceState().dropdownValue,
+//            TimeSelectState()._time);
+//
+//        showDialog(
+//            context: context,
+//            builder: (context) {
+//              return const AlertDialog(
+//                content: Text("Reminder Successfully Added"),
+//              );
+//            });
+//      },
+//      tooltip: 'save',
+//      backgroundColor: Colors.green,
+//      child: const Icon(Icons.check),
+//    );
+//  }
+//}
+}
 
 class Dropdown1 extends StatefulWidget {
   const Dropdown1({Key? key}) : super(key: key);
 
   @override
-  Dropdown1State createState() => Dropdown1State();
+  ImportanceState createState() => ImportanceState();
 }
 
-class Dropdown1State extends State<Dropdown1> {
+class ImportanceState extends State<Dropdown1> {
   @override
-
   String dropdownValue = "Low";
   String dropdownValue2 = "Select";
 
@@ -150,11 +221,12 @@ class Dropdown1State extends State<Dropdown1> {
       });
     }
   }
+
   Widget build(BuildContext context) {
     return DropdownButton(
-        items: const [
-          DropdownMenuItem(child: Text("Low"), value: "Low"),
-          DropdownMenuItem(child: Text("High"), value: "High"),
+      items: const [
+        DropdownMenuItem(child: Text("Low"), value: "Low"),
+        DropdownMenuItem(child: Text("High"), value: "High"),
       ],
       value: dropdownValue,
       onChanged: dropdownCallback,
@@ -170,7 +242,6 @@ class Dropdown1State extends State<Dropdown1> {
   }
 }
 
-
 class Dropdown2 extends StatefulWidget {
   const Dropdown2({Key? key}) : super(key: key);
 
@@ -180,7 +251,6 @@ class Dropdown2 extends StatefulWidget {
 
 class Dropdown2State extends State<Dropdown2> {
   @override
-
   String dropdownValue2 = "Select";
 
   void dropdownCallback2(String? selectedValue) {
@@ -190,6 +260,7 @@ class Dropdown2State extends State<Dropdown2> {
       });
     }
   }
+
   Widget build(BuildContext context) {
     return DropdownButton(
       items: const [
@@ -222,9 +293,7 @@ class TimeSelect extends StatefulWidget {
 
 class TimeSelectState extends State<TimeSelect> {
   @override
-
   TimeOfDay _time = TimeOfDay.now();
-
 
   void _selectTime() async {
     final TimeOfDay? newTime = await showTimePicker(
@@ -237,19 +306,59 @@ class TimeSelectState extends State<TimeSelect> {
       });
     }
   }
+
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: _selectTime,
         child: const Text('SELECT TIME'),
         style: ButtonStyle(
-            backgroundColor:
-            MaterialStateProperty.all<Color>(accentColor)));
+            backgroundColor: MaterialStateProperty.all<Color>(accentColor)));
   }
 }
 
 abstract class CreationPageController extends StateNotifier<CreationPageModel> {
   CreationPageController(CreationPageModel state) : super(state);
 
-  void addReminder(String name, String dosis, String frequency, String details, String importance, TimeOfDay timeOfDay, bool status) {}
   String showReminder();
 }
+
+//class Dropdown3 extends StatefulWidget {
+//  List<Widget> list;
+//  Dropdown3(this.list, {Key? key}) : super(key: key);
+//
+//
+//  @override
+//  ProfilePickerState createState() => ProfilePickerState(list);
+//}
+//
+//class ProfilePickerState extends State<Dropdown3> {
+//  @override
+//  String dropdownValue = "";
+//
+//  List<Widget> list = [];
+//
+//  ProfilePickerState(this.list);
+//
+//  void dropdownCallback(String? selectedValue) {
+//    if (selectedValue is String) {
+//      setState(() {
+//        dropdownValue = selectedValue;
+//      });
+//    }
+//  }
+//
+//  Widget build(BuildContext context) {
+//    return DropdownButton(
+//      items: list,
+//      onChanged: dropdownCallback,
+//      // Customizatons
+//      //iconSize: 42.0,
+//      //iconEnabledColor: Colors.green,
+//      //icon: const Icon(Icons.flutter_dash),
+//      //isExpanded: true,
+//      style: const TextStyle(
+//        color: Colors.black,
+//      ),
+//    );
+//  }
+//}
