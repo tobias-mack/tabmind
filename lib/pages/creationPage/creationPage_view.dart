@@ -49,6 +49,8 @@ class CreationPageView extends ConsumerWidget {
                   content: Text("Reminder Successfully Added"),
                 );
               });
+
+          Navigator.pop(context);
         },
         tooltip: 'save',
         backgroundColor: Colors.green,
@@ -322,43 +324,3 @@ abstract class CreationPageController extends StateNotifier<CreationPageModel> {
   String showReminder();
 }
 
-//class Dropdown3 extends StatefulWidget {
-//  List<Widget> list;
-//  Dropdown3(this.list, {Key? key}) : super(key: key);
-//
-//
-//  @override
-//  ProfilePickerState createState() => ProfilePickerState(list);
-//}
-//
-//class ProfilePickerState extends State<Dropdown3> {
-//  @override
-//  String dropdownValue = "";
-//
-//  List<Widget> list = [];
-//
-//  ProfilePickerState(this.list);
-//
-//  void dropdownCallback(String? selectedValue) {
-//    if (selectedValue is String) {
-//      setState(() {
-//        dropdownValue = selectedValue;
-//      });
-//    }
-//  }
-//
-//  Widget build(BuildContext context) {
-//    return DropdownButton(
-//      items: list,
-//      onChanged: dropdownCallback,
-//      // Customizatons
-//      //iconSize: 42.0,
-//      //iconEnabledColor: Colors.green,
-//      //icon: const Icon(Icons.flutter_dash),
-//      //isExpanded: true,
-//      style: const TextStyle(
-//        color: Colors.black,
-//      ),
-//    );
-//  }
-//}

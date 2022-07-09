@@ -19,12 +19,6 @@ class ReminderPageView extends ConsumerWidget {
     final List<ProfilesModel> model =
         ref.watch(providers.profilesControllerProvider);
 
-    List<ProfileTile> list1 = [
-      ProfileTile("Ibuprofen", true),
-      ProfileTile("Paracetamol", true),
-      ProfileTile("Lisinopril", false),
-    ];
-
     return DefaultTabController(
       initialIndex: 1,
       length: model.length,
@@ -61,7 +55,9 @@ class ReminderPageView extends ConsumerWidget {
                         child: Text("Your Reminders",
                             style: Theme.of(context).textTheme.headline6),
                       ),
-                      for (int i = 0; i <= list1.length - 1; i++) list1[i],
+                      for (int i = 0; i <= model.length - 1; i++)
+                        for (ReminderPageModel reminder in model[i].reminders)
+                          ProfileTile(reminder.name, reminder.status),
                       Padding(
                         padding: const EdgeInsets.only(top: 50, bottom: 50),
                         child: Column(
