@@ -89,4 +89,29 @@ class ProfilesControllerImplementation extends ProfilesController {
     }
     state = newList;
   }
+
+  @override
+  void changeReminder(
+      String profileName,
+      String name,
+      String dosis,
+      String frequency,
+      String details,
+      String importance,
+      TimeOfDay timeOfDay) {
+    // TODO: implement changeReminder
+  }
+
+  @override
+  ReminderPageModel getReminder(String profileName, String name) {
+    // TODO: implement getReminder
+    return ReminderPageModel(
+        name: "name",
+        dosis: "dosis",
+        frequency: "frequency",
+        importance: "importance",
+        details: "details",
+        timeOfDay: TimeOfDay.now(),
+        status: false);
+  }
 }

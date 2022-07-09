@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tabmind/ui-kit/reminder_home_tile.dart';
 
 import '../../common/providers.dart';
-import '../../ui-kit/reminder_tile.dart';
+import '../../ui-kit/profile_home_tile.dart';
 import '../../util/AppColors.dart';
 import '../profiles/profiles_model.dart';
 import '../profiles/profiles_view.dart';
@@ -83,7 +83,7 @@ class HomeView extends ConsumerWidget {
                                     for (int i = 0; i <= model.length - 1; i++)
                                       Row(
                                         children: [
-                                          ReminderTile(
+                                          ProfileHomeTile(
                                               image: const AssetImage(
                                                   "assets/images/bell.PNG"),
                                               profileName:

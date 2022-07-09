@@ -168,7 +168,6 @@ class CreationPageView extends ConsumerWidget {
     );
   }
 
-  validateName(CreationPageView creationPageView) {}
 
 //getFAB(ProfilesController controller, BuildContext context) {
 //  if (controllerName.text.isEmpty) {

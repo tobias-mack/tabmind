@@ -8,6 +8,7 @@ import '../../common/providers.dart';
 import '../../ui-kit/profile_tile.dart';
 import '../../ui-kit/reminder_home_tile.dart';
 import '../../util/AppColors.dart';
+import '../reminderPage/reminderPage_model.dart';
 
 class ProfilesView extends ConsumerWidget {
   const ProfilesView({Key? key}) : super(key: key);
@@ -71,5 +72,10 @@ abstract class ProfilesController extends StateNotifier<List<ProfilesModel>> {
   List<ReminderHomeTile> remindersToday();
 
   void addReminder(String profileName, String name, String dosis,
+      String frequency, String details, String importance, TimeOfDay timeOfDay);
+
+  ReminderPageModel getReminder(String profileName, String name);
+
+  void changeReminder(String profileName, String name, String dosis,
       String frequency, String details, String importance, TimeOfDay timeOfDay);
 }
