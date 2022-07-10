@@ -78,4 +78,6 @@ abstract class ProfilesController extends StateNotifier<List<ProfilesModel>> {
 
   void changeReminder(String profileName, String name, String dosis,
       String frequency, String details, String importance, TimeOfDay timeOfDay);
+
+  void removeReminder(String profileName, String name);
 }
