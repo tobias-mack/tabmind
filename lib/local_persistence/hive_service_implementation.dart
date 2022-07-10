@@ -6,8 +6,10 @@ import 'package:tabmind/pages/profiles/profiles_model.dart';
 import 'package:tabmind/pages/reminderPage/reminderPage_model.dart';
 import 'package:tabmind/ui-kit/reminder_home_tile.dart';
 
+import 'Boxes.dart';
+
 class HiveServiceImplementation implements HiveService {
-  late final Box<ProfilesModel> _profiles;
+  //late final Box<ProfilesModel> profiles;
   static const String boxName = 'profiles';
 
   HiveServiceImplementation();
@@ -15,7 +17,7 @@ class HiveServiceImplementation implements HiveService {
   initHive() async {
     await Hive.initFlutter();
     Hive.registerAdapter(ProfileModelAdapter());
-    _profiles = await Hive.openBox<ProfilesModel>(boxName);
+    await Hive.openBox<ProfilesModel>(boxName);
   }
 
   //@override
@@ -23,22 +25,23 @@ class HiveServiceImplementation implements HiveService {
 
   @override
   void clearAll() {
-    _profiles.clear();
+    Boxes.getProfiles().clear();
   }
 
   @override
   ProfilesModel addProfile(String name) {
     ProfilesModel profile =
         ProfilesModel(reminders: [], profileName: name, active: false);
-    _profiles.add(profile);
+    Boxes.getProfiles().add(profile);
     return profile;
   }
 
   @override
   void removeProfile(String name) {
-    ProfilesModel p =
-        _profiles.values.firstWhere((item) => item.profileName == name);
-    _profiles.delete(p);
+    ProfilesModel p = Boxes.getProfiles()
+        .values
+        .firstWhere((item) => item.profileName == name);
+    Boxes.getProfiles().delete(p);
   }
 
   @override
