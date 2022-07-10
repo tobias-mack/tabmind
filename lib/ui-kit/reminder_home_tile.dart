@@ -10,6 +10,7 @@ class ReminderHomeTile extends ConsumerWidget {
   final String profilName;
   final String name;
   bool switcher;
+  TimeOfDay timeOfDay = TimeOfDay.now();
 
   ReminderHomeTile(this.profilName, this.name, this.switcher, {Key? key})
       : super(key: key);
@@ -22,7 +23,7 @@ class ReminderHomeTile extends ConsumerWidget {
         ref.watch(providers.profilesControllerProvider);
 
     var reminder = controller.getReminder(profilName, name);
-
+    timeOfDay = reminder.timeOfDay;
     return GestureDetector(
       onTap: () {
         //TODO: route to profile reminders
@@ -33,7 +34,7 @@ class ReminderHomeTile extends ConsumerWidget {
         title: Container(
           margin: const EdgeInsets.only(left: 10.0, bottom: 10.0),
           padding: const EdgeInsets.all(10.0),
-            decoration: myBoxDecoration(),
+          decoration: myBoxDecoration(),
             child: Text(
             name,
             style: Theme.of(context).textTheme.headline6!,

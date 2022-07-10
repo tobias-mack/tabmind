@@ -52,7 +52,7 @@ class ReminderTile extends ConsumerWidget {
           ),
         ),
         onDismissed: (DismissDirection direction) {
-          controller.removeProfile(name);
+          controller.removeReminder(profileName, name);
         },
         key: UniqueKey(),
       ),

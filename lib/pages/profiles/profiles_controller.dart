@@ -53,8 +53,19 @@ class ProfilesControllerImplementation extends ProfilesController {
 
   @override
   List<ReminderHomeTile> upcomingReminders() {
-    // TODO: implement upcomingReminders
-    return [];
+    List<ReminderHomeTile> reminderUpcomingHomeTile = [];
+
+    for (ProfilesModel profile in state) {
+      for (ReminderPageModel r in profile.reminders) {
+        reminderUpcomingHomeTile
+            .add(ReminderHomeTile(profile.profileName, r.name, r.status));
+      }
+    }
+    // TODO: implementation not working, timeOfDay not correct
+    reminderUpcomingHomeTile
+        .sort((a, b) => a.timeOfDay.hour.compareTo(b.timeOfDay.hour));
+
+    return reminderUpcomingHomeTile;
   }
 
   @override
@@ -113,15 +124,31 @@ class ProfilesControllerImplementation extends ProfilesController {
 
   @override
   ReminderPageModel getReminder(String profileName, String name) {
-    // TODO: implement getReminder
-    return ReminderPageModel(
-        name: "name",
-        dosis: "dosis",
-        frequency: "frequency",
-        importance: "importance",
-        details: "details",
-        timeOfDay: TimeOfDay.now(),
-        status: false);
+    return state
+        .firstWhere((element) => element.profileName == profileName)
+        .reminders
+        .firstWhere((element) => element.name == name);
+  }
+
+  @override
+  void removeReminder(String profileName, String name) {
+    List<ProfilesModel> newList = [];
+    List<ReminderPageModel> newReminderList = [];
+
+    for (ProfilesModel profile in state) {
+      if (profile.profileName == profileName) {
+        for (ReminderPageModel r in profile.reminders) {
+          if (r.name != name) {
+            newReminderList.add(r);
+          }
+        }
+        profile = profile.copyWith(reminders: newReminderList);
+        newList.add(profile);
+      } else {
+        newList.add(profile);
+      }
+    }
+    state = newList;
   }
 
   @override
