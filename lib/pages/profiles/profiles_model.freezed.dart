@@ -16,10 +16,13 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ProfilesModel {
+  @HiveField(0)
   String get profileName => throw _privateConstructorUsedError;
 
+  @HiveField(1)
   bool get active => throw _privateConstructorUsedError;
 
+  @HiveField(2)
   List<ReminderPageModel> get reminders => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -34,7 +37,9 @@ abstract class $ProfilesModelCopyWith<$Res> {
       _$ProfilesModelCopyWithImpl<$Res>;
 
   $Res call(
-      {String profileName, bool active, List<ReminderPageModel> reminders});
+      {@HiveField(0) String profileName,
+      @HiveField(1) bool active,
+      @HiveField(2) List<ReminderPageModel> reminders});
 }
 
 /// @nodoc
@@ -43,7 +48,6 @@ class _$ProfilesModelCopyWithImpl<$Res>
   _$ProfilesModelCopyWithImpl(this._value, this._then);
 
   final ProfilesModel _value;
-
   // ignore: unused_field
   final $Res Function(ProfilesModel) _then;
 
@@ -79,7 +83,9 @@ abstract class _$$_ProfilesModelCopyWith<$Res>
 
   @override
   $Res call(
-      {String profileName, bool active, List<ReminderPageModel> reminders});
+      {@HiveField(0) String profileName,
+      @HiveField(1) bool active,
+      @HiveField(2) List<ReminderPageModel> reminders});
 }
 
 /// @nodoc
@@ -118,20 +124,24 @@ class __$$_ProfilesModelCopyWithImpl<$Res>
 
 /// @nodoc
 
+@HiveType(typeId: 0, adapterName: 'ProfileModelAdapter')
 class _$_ProfilesModel implements _ProfilesModel {
   const _$_ProfilesModel(
-      {required this.profileName,
-      required this.active,
-      required final List<ReminderPageModel> reminders})
+      {@HiveField(0) required this.profileName,
+      @HiveField(1) required this.active,
+      @HiveField(2) required final List<ReminderPageModel> reminders})
       : _reminders = reminders;
 
   @override
+  @HiveField(0)
   final String profileName;
   @override
+  @HiveField(1)
   final bool active;
   final List<ReminderPageModel> _reminders;
 
   @override
+  @HiveField(2)
   List<ReminderPageModel> get reminders {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_reminders);
@@ -169,19 +179,22 @@ class _$_ProfilesModel implements _ProfilesModel {
 
 abstract class _ProfilesModel implements ProfilesModel {
   const factory _ProfilesModel(
-      {required final String profileName,
-      required final bool active,
-      required final List<ReminderPageModel> reminders}) = _$_ProfilesModel;
+          {@HiveField(0) required final String profileName,
+          @HiveField(1) required final bool active,
+          @HiveField(2) required final List<ReminderPageModel> reminders}) =
+      _$_ProfilesModel;
 
   @override
+  @HiveField(0)
   String get profileName => throw _privateConstructorUsedError;
 
   @override
+  @HiveField(1)
   bool get active => throw _privateConstructorUsedError;
 
   @override
+  @HiveField(2)
   List<ReminderPageModel> get reminders => throw _privateConstructorUsedError;
-
   @override
   @JsonKey(ignore: true)
   _$$_ProfilesModelCopyWith<_$_ProfilesModel> get copyWith =>
