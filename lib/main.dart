@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tabmind/local_persistence/hive_service_implementation.dart';
 import 'package:tabmind/pages/calendar/calendar_view.dart';
 import 'package:tabmind/pages/home/home_view.dart';
 import 'package:tabmind/pages/profiles/profiles_view.dart';
@@ -10,7 +9,8 @@ import 'package:tabmind/util/AppColors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
+  final localPersistenceService = HiveServiceImplementation();
+  await localPersistenceService.initHive();
   runApp(await buildApp());
 }
 
