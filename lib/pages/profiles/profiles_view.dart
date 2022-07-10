@@ -1,10 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:tabmind/pages/profiles/profiles_model.dart';
 
 import '../../common/providers.dart';
+import '../../local_persistence/Boxes.dart';
 import '../../ui-kit/profile_tile.dart';
 import '../../ui-kit/reminder_home_tile.dart';
 import '../../util/AppColors.dart';
@@ -19,6 +22,12 @@ class ProfilesView extends ConsumerWidget {
         ref.read(providers.profilesControllerProvider.notifier);
     final List<ProfilesModel> model =
         ref.watch(providers.profilesControllerProvider);
+
+    SchedulerBinding.instance?.addPostFrameCallback((_) async {
+      var x = Boxes.getProfiles();
+      controller.initProfiles(x);
+      //controller.state = x.values.toList().cast<ProfilesModel>();
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -78,4 +87,6 @@ abstract class ProfilesController extends StateNotifier<List<ProfilesModel>> {
 
   void changeReminder(String profileName, String name, String dosis,
       String frequency, String details, String importance, TimeOfDay timeOfDay);
+
+  void initProfiles(Box<ProfilesModel> profiles);
 }

@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/time.dart';
+import 'package:hive/hive.dart';
+import 'package:tabmind/local_persistence/hive_service_implementation.dart';
 import 'package:tabmind/pages/profiles/profiles_model.dart';
 import 'package:tabmind/pages/profiles/profiles_view.dart';
 import 'package:tabmind/pages/reminderPage/reminderPage_model.dart';
 import 'package:tabmind/ui-kit/reminder_home_tile.dart';
 
 class ProfilesControllerImplementation extends ProfilesController {
-  ProfilesControllerImplementation({List<ProfilesModel>? model})
-      : super(
+  final HiveServiceImplementation _localPersistenceService;
+
+  ProfilesControllerImplementation(
+      {required HiveServiceImplementation localPersistenceService,
+      List<ProfilesModel>? model})
+      : _localPersistenceService = localPersistenceService,
+        super(
           model ?? List<ProfilesModel>.empty(),
         );
 
   @override
   void addProfile(String name) {
-    ProfilesModel profile =
-        ProfilesModel(reminders: [], profileName: name, active: false);
+    ProfilesModel profile = _localPersistenceService.addProfile(name);
+    //ProfilesModel profile =
+    //    ProfilesModel(reminders: [], profileName: name, active: false);
     state = [...state, profile];
   }
 
   @override
   void removeProfile(String name) {
+    _localPersistenceService.removeProfile(name);
     state = [
       for (final profile in state)
         if (profile.profileName != name) profile,
@@ -113,5 +122,10 @@ class ProfilesControllerImplementation extends ProfilesController {
         details: "details",
         timeOfDay: TimeOfDay.now(),
         status: false);
+  }
+
+  @override
+  void initProfiles(Box<ProfilesModel> profiles) {
+    state = profiles.values.toList().cast<ProfilesModel>();
   }
 }

@@ -6,6 +6,7 @@ import 'package:tabmind/pages/creationPage/creationPage_controller.dart';
 import 'package:tabmind/pages/creationPage/creationPage_model.dart';
 import 'package:tabmind/pages/creationPage/creationPage_view.dart';
 
+import '../local_persistence/hive_service_implementation.dart';
 import '../pages/home/home_controller.dart';
 import '../pages/home/home_model.dart';
 import '../pages/home/home_view.dart';
@@ -44,8 +45,14 @@ class Providers {
                 id: id,
               ));
 
+  final Provider<HiveServiceImplementation> localPersistenceProvider =
+      Provider<HiveServiceImplementation>(
+          (ProviderRef ref) => HiveServiceImplementation());
+
   final StateNotifierProvider<ProfilesController, List<ProfilesModel>>
       profilesControllerProvider =
       StateNotifierProvider<ProfilesController, List<ProfilesModel>>(
-          (StateNotifierProviderRef ref) => ProfilesControllerImplementation());
+          (StateNotifierProviderRef ref) => ProfilesControllerImplementation(
+              localPersistenceService:
+                  ref.read(providers.localPersistenceProvider)));
 }
