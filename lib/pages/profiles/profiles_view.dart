@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tabmind/pages/profiles/profiles_model.dart';
 
 import '../../common/providers.dart';
@@ -22,12 +22,6 @@ class ProfilesView extends ConsumerWidget {
         ref.read(providers.profilesControllerProvider.notifier);
     final List<ProfilesModel> model =
         ref.watch(providers.profilesControllerProvider);
-
-    SchedulerBinding.instance?.addPostFrameCallback((_) async {
-      var x = Boxes.getProfiles();
-      controller.initProfiles(x);
-      //controller.state = x.values.toList().cast<ProfilesModel>();
-    });
 
     return Scaffold(
       appBar: AppBar(
@@ -58,8 +52,21 @@ class ProfilesView extends ConsumerWidget {
               child: Text("Your Profiles",
                   style: Theme.of(context).textTheme.headline6),
             ),
-            for (int i = 0; i <= model.length - 1; i++)
-              ProfileTile(model[i].profileName, model[i].active),
+            ValueListenableBuilder<Box<ProfilesModel>>(
+                valueListenable: Boxes.getProfiles().listenable(),
+                builder: (context, box, _) {
+                  final profiles = box.values.toList().cast<ProfilesModel>();
+                  List<ProfileTile> list = [];
+                  for (int i = 0; i <= profiles.length - 1; i++)
+                    list.add(ProfileTile(
+                        profiles[i].profileName, profiles[i].active));
+                  return Column(
+                    children: [
+                      for (int i = 0; i <= profiles.length - 1; i++)
+                        ProfileTile(profiles[i].profileName, profiles[i].active)
+                    ],
+                  );
+                }),
           ],
         ),
       ),

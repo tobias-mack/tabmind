@@ -38,10 +38,15 @@ class HiveServiceImplementation implements HiveService {
 
   @override
   void removeProfile(String name) {
-    ProfilesModel p = Boxes.getProfiles()
-        .values
-        .firstWhere((item) => item.profileName == name);
-    Boxes.getProfiles().delete(p);
+    final Map<dynamic, ProfilesModel> deliveriesMap =
+        Boxes.getProfiles().toMap();
+    dynamic desiredKey;
+    deliveriesMap.forEach((key, value) {
+      if (value.profileName == name) {
+        desiredKey = key;
+      }
+    });
+    Boxes.getProfiles().delete(desiredKey);
   }
 
   @override
