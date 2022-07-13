@@ -92,4 +92,3 @@ abstract class ProfilesController extends StateNotifier<List<ProfilesModel>> {
 
   void initProfiles(Box<ProfilesModel> profiles);
 }
-}
