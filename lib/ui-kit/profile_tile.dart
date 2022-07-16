@@ -42,7 +42,7 @@ class ProfileTile extends ConsumerWidget {
               value: switcher,
               activeColor: accentColor,
               onChanged: (bool value) {
-                profileActivated(value, model, controller);
+                controller.toggleProfile(name);
               },
             ),
           ),
@@ -53,21 +53,5 @@ class ProfileTile extends ConsumerWidget {
         key: UniqueKey(),
       ),
     );
-  }
-
-  void profileActivated(
-      bool value, Box<ProfilesModel> model, ProfilesController controller) {
-    List<ProfilesModel> newList = [];
-
-    for (ProfilesModel profile in model.values) {
-      if (profile.profileName == name) {
-        profile = profile.copyWith(active: value);
-        newList.add(profile);
-      } else {
-        newList.add(profile);
-      }
-    }
-//TODO: aaa
-    switcher = value;
   }
 }

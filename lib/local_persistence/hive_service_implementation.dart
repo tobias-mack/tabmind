@@ -9,7 +9,6 @@ import 'package:tabmind/pages/reminderPage/reminderPage_model.dart';
 import 'Boxes.dart';
 
 class HiveServiceImplementation implements HiveService {
-  //late final Box<ProfilesModel> profiles;
   static const String boxName = 'profiles';
 
   HiveServiceImplementation();
@@ -143,6 +142,39 @@ class HiveServiceImplementation implements HiveService {
 
     for (var element in profile!.reminders) {
       if (element.name != name) {
+        newList.add(element);
+      }
+    }
+
+    ProfilesModel newProfile = profile.copyWith(reminders: newList);
+    Boxes.getProfiles().put(desiredKey, newProfile);
+  }
+
+  @override
+  void toggleProfile(String profileName) {
+    var desiredKey = getProfileKey(profileName);
+    ProfilesModel? profile = Boxes.getProfiles().get(desiredKey);
+    List<ReminderPageModel> newList = [];
+
+    for (var element in profile!.reminders) {
+      newList.add(element.copyWith(status: !profile.active));
+    }
+
+    ProfilesModel newProfile =
+        profile.copyWith(reminders: newList, active: !profile.active);
+    Boxes.getProfiles().put(desiredKey, newProfile);
+  }
+
+  @override
+  void toggleReminder(String profileName, String name) {
+    var desiredKey = getProfileKey(profileName);
+    ProfilesModel? profile = Boxes.getProfiles().get(desiredKey);
+    List<ReminderPageModel> newList = [];
+
+    for (var element in profile!.reminders) {
+      if (element.name == name) {
+        newList.add(element.copyWith(status: !element.status));
+      } else {
         newList.add(element);
       }
     }

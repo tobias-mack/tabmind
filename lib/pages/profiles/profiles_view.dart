@@ -100,5 +100,7 @@ abstract class ProfilesController extends StateNotifier<Box<ProfilesModel>> {
 
   void removeReminder(String profileName, String name);
 
-  void initProfiles(Box<ProfilesModel> profiles);
+  void toggleReminder(String profileName, String name);
+
+  void toggleProfile(String profileName);
 }

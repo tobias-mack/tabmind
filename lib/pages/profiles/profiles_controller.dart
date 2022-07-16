@@ -96,6 +96,12 @@ class ProfilesControllerImplementation extends ProfilesController {
   }
 
   @override
-  void initProfiles(Box<ProfilesModel> profiles) {
+  void toggleProfile(String profileName) {
+    _localPersistenceService.toggleProfile(profileName);
+  }
+
+  @override
+  void toggleReminder(String profileName, String name) {
+    _localPersistenceService.toggleReminder(profileName, name);
   }
 }

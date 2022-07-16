@@ -15,6 +15,10 @@ abstract class HiveService {
 
   ReminderPageModel getReminder(String profileName, String name);
 
+  void toggleReminder(String profileName, String name);
+
+  void toggleProfile(String profileName);
+
   void changeReminder(
       String profileName,
       String name,

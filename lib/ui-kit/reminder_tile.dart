@@ -6,7 +6,6 @@ import '../common/providers.dart';
 import '../pages/profiles/profiles_model.dart';
 import '../pages/profiles/profiles_view.dart';
 import '../pages/reminderDetails/reminderDetails_view.dart';
-import '../pages/reminderPage/reminderPage_model.dart';
 import '../util/AppColors.dart';
 
 class ReminderTile extends ConsumerWidget {
@@ -47,7 +46,7 @@ class ReminderTile extends ConsumerWidget {
               value: switcher,
               activeColor: accentColor,
               onChanged: (bool value) {
-                reminderActivated(value, model, controller);
+                controller.toggleReminder(profileName, name);
               },
             ),
           ),
@@ -67,31 +66,5 @@ class ReminderTile extends ConsumerWidget {
           Radius.circular(15.0) //                 <--- border radius here
           ),
     );
-  }
-
-  void reminderActivated(
-      bool value, Box<ProfilesModel> model, ProfilesController controller) {
-    ReminderPageModel newReminder =
-        controller.getReminder(profileName, name).copyWith(status: value);
-
-    List<ProfilesModel> newList = [];
-    List<ReminderPageModel> newReminderList = [];
-    newReminderList.add(newReminder);
-
-    for (ProfilesModel profile in controller.state.values) {
-      if (profile.profileName == profileName) {
-        for (ReminderPageModel r in profile.reminders) {
-          if (r.name != name) {
-            newReminderList.add(r);
-          }
-        }
-        profile = profile.copyWith(reminders: newReminderList);
-        newList.add(profile);
-      } else {
-        newList.add(profile);
-      }
-    }
-//TODO: aaall
-    switcher = value;
   }
 }
