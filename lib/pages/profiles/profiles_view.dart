@@ -88,8 +88,15 @@ abstract class ProfilesController extends StateNotifier<Box<ProfilesModel>> {
 
   ReminderPageModel getReminder(String profileName, String name);
 
-  void changeReminder(String profileName, String name, String dosis,
-      String frequency, String details, String importance, TimeOfDay timeOfDay);
+  void changeReminder(
+      String profileName,
+      String name,
+      String oldName,
+      String dosis,
+      String frequency,
+      String details,
+      String importance,
+      TimeOfDay timeOfDay);
 
   void removeReminder(String profileName, String name);
 

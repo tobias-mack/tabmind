@@ -75,13 +75,14 @@ class ProfilesControllerImplementation extends ProfilesController {
   void changeReminder(
       String profileName,
       String name,
+      String oldName,
       String dosis,
       String frequency,
       String details,
       String importance,
       TimeOfDay timeOfDay) {
-    _localPersistenceService.changeReminder(
-        profileName, name, dosis, frequency, details, importance, timeOfDay);
+    _localPersistenceService.changeReminder(profileName, name, oldName, dosis,
+        frequency, details, importance, timeOfDay);
   }
 
   @override

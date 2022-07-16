@@ -34,6 +34,7 @@ class ReminderDetailsView extends ConsumerWidget {
           controller.changeReminder(
               profileName,
               controllerName.text,
+              reminder.name,
               controllerDosis.text,
               controllerFrequency.text,
               controllerNotes.text,

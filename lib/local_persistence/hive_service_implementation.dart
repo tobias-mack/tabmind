@@ -96,6 +96,7 @@ class HiveServiceImplementation implements HiveService {
   void changeReminder(
       String profileName,
       String name,
+      String oldName,
       String dosis,
       String frequency,
       String details,
@@ -107,7 +108,7 @@ class HiveServiceImplementation implements HiveService {
     List<ReminderPageModel> newList = [];
 
     for (var element in profile!.reminders) {
-      if (element.name != name) {
+      if (element.name != oldName) {
         newList.add(element);
       }
     }

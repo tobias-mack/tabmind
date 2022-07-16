@@ -22,34 +22,35 @@ class ReminderPageView extends ConsumerWidget {
     final Box<ProfilesModel> model =
         ref.watch(providers.profilesControllerProvider);
 
-    return DefaultTabController(
-      initialIndex: 1,
-      length: model.length,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: const Image(
-            image: AssetImage('assets/tabmind-logos/Logo-Black-removedbg.png'),
-            width: 120,
-            height: 50,
-          ),
-          centerTitle: true,
-          bottom: TabBar(
-            labelColor: Colors.black,
-            indicatorColor: accentColor,
-            tabs: <Widget>[
-              for (int i = 0; i <= model.values.length - 1; i++)
-                Tab(
-                  text: model.values.elementAt(i).profileName,
+    return ValueListenableBuilder<Box<ProfilesModel>>(
+        valueListenable: Boxes.getProfiles().listenable(),
+        builder: (context, box, _) {
+          final profiles = box.values.toList().cast<ProfilesModel>();
+          return DefaultTabController(
+            initialIndex: 1,
+            length: model.length,
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                title: const Image(
+                  image: AssetImage(
+                      'assets/tabmind-logos/Logo-Black-removedbg.png'),
+                  width: 120,
+                  height: 50,
                 ),
-            ],
-          ),
-        ),
-        body: ValueListenableBuilder<Box<ProfilesModel>>(
-            valueListenable: Boxes.getProfiles().listenable(),
-            builder: (context, box, _) {
-              final profiles = box.values.toList().cast<ProfilesModel>();
-              return TabBarView(
+                centerTitle: true,
+                bottom: TabBar(
+                  labelColor: Colors.black,
+                  indicatorColor: accentColor,
+                  tabs: <Widget>[
+                    for (int i = 0; i <= model.values.length - 1; i++)
+                      Tab(
+                        text: model.values.elementAt(i).profileName,
+                      ),
+                  ],
+                ),
+              ),
+              body: TabBarView(
                 children: <Widget>[
                   for (int i = 0; i <= profiles.length - 1; i++)
                     SingleChildScrollView(
@@ -96,17 +97,17 @@ class ReminderPageView extends ConsumerWidget {
                       ),
                     ),
                 ],
-              );
-            }),
+              ),
+            ),
 
-        //floatingActionButton: FloatingActionButton(
-        //  onPressed:  () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreationPageView()));},
-        //  tooltip: 'create a new reminder for the selected profile',
-        //  backgroundColor: accentColor,
-        //  child: Icon(Icons.add),
-        //),
-      ),
-    );
+            //floatingActionButton: FloatingActionButton(
+            //  onPressed:  () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreationPageView()));},
+            //  tooltip: 'create a new reminder for the selected profile',
+            //  backgroundColor: accentColor,
+            //  child: Icon(Icons.add),
+            //),
+          );
+        });
   }
 }
 
