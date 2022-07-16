@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../pages/profiles/profiles_model.dart';
 import '../pages/reminderPage/reminderPage_model.dart';
-import '../ui-kit/reminder_home_tile.dart';
 
 abstract class HiveService {
   ProfilesModel addProfile(String name);
@@ -11,10 +10,6 @@ abstract class HiveService {
 
   void changeName(String name, String newName);
 
-  List<ReminderHomeTile> upcomingReminders();
-
-  List<ReminderHomeTile> remindersToday();
-
   void addReminder(String profileName, String name, String dosis,
       String frequency, String details, String importance, TimeOfDay timeOfDay);
 
@@ -22,6 +17,8 @@ abstract class HiveService {
 
   void changeReminder(String profileName, String name, String dosis,
       String frequency, String details, String importance, TimeOfDay timeOfDay);
+
+  void removeReminder(String profileName, String name);
 
   void clearAll();
 }

@@ -69,31 +69,6 @@ class ProfilesControllerImplementation extends ProfilesController {
       TimeOfDay timeOfDay) {
     _localPersistenceService.addReminder(
         profileName, name, dosis, frequency, details, importance, timeOfDay);
-
-    ReminderPageModel newReminder = ReminderPageModel(
-        name: name,
-        dosis: dosis,
-        frequency: frequency,
-        importance: importance,
-        details: details,
-        timeOfDay: timeOfDay,
-        status: false);
-
-    List<ProfilesModel> newList = [];
-    List<ReminderPageModel> newReminderList = [];
-    newReminderList.add(newReminder);
-
-    for (ProfilesModel profile in state.values) {
-      if (profile.profileName == profileName) {
-        for (ReminderPageModel r in profile.reminders) {
-          newReminderList.add(r);
-        }
-        profile = profile.copyWith(reminders: newReminderList);
-        newList.add(profile);
-      } else {
-        newList.add(profile);
-      }
-    }
   }
 
   @override
@@ -105,43 +80,18 @@ class ProfilesControllerImplementation extends ProfilesController {
       String details,
       String importance,
       TimeOfDay timeOfDay) {
-    // TODO: implement changeReminder
+    _localPersistenceService.changeReminder(
+        profileName, name, dosis, frequency, details, importance, timeOfDay);
   }
 
   @override
   ReminderPageModel getReminder(String profileName, String name) {
-    // return state
-    //     .firstWhere((element) => element.profileName == profileName)
-    //     .reminders
-    //     .firstWhere((element) => element.name == name);
-    return ReminderPageModel(
-        name: "name",
-        dosis: "dosis",
-        frequency: "frequency",
-        importance: "importance",
-        details: "details",
-        timeOfDay: TimeOfDay.now(),
-        status: false);
+    return _localPersistenceService.getReminder(profileName, name);
   }
 
   @override
   void removeReminder(String profileName, String name) {
-    List<ProfilesModel> newList = [];
-    List<ReminderPageModel> newReminderList = [];
-
-    for (ProfilesModel profile in state.values) {
-      if (profile.profileName == profileName) {
-        for (ReminderPageModel r in profile.reminders) {
-          if (r.name != name) {
-            newReminderList.add(r);
-          }
-        }
-        profile = profile.copyWith(reminders: newReminderList);
-        newList.add(profile);
-      } else {
-        newList.add(profile);
-      }
-    }
+    _localPersistenceService.removeReminder(profileName, name);
   }
 
   @override

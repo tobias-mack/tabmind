@@ -5,7 +5,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tabmind/local_persistence/hive_service.dart';
 import 'package:tabmind/pages/profiles/profiles_model.dart';
 import 'package:tabmind/pages/reminderPage/reminderPage_model.dart';
-import 'package:tabmind/ui-kit/reminder_home_tile.dart';
 
 import 'Boxes.dart';
 
@@ -57,14 +56,14 @@ class HiveServiceImplementation implements HiveService {
   }
 
   @override
-  Future<void> addReminder(
+  void addReminder(
       String profileName,
       String name,
       String dosis,
       String frequency,
       String details,
       String importance,
-      TimeOfDay timeOfDay) async {
+      TimeOfDay timeOfDay) {
     var desiredKey = getProfileKey(profileName);
     ProfilesModel? profile = Boxes.getProfiles().get(desiredKey);
     ReminderPageModel newReminder = ReminderPageModel(
@@ -75,7 +74,6 @@ class HiveServiceImplementation implements HiveService {
         details: details,
         timeOfDay: timeOfDay,
         status: false);
-    //profile?.reminders.add(newReminder);
 
     List<ReminderPageModel> newList = [];
     newList.add(newReminder);
@@ -83,9 +81,7 @@ class HiveServiceImplementation implements HiveService {
       newList.add(element);
     }
     ProfilesModel newProfile = profile.copyWith(reminders: newList);
-    //Boxes.getProfiles().delete(desiredKey);
-    //Boxes.getProfiles().add(newProfile!);
-    await Boxes.getProfiles().put(desiredKey, newProfile);
+    Boxes.getProfiles().put(desiredKey, newProfile);
   }
 
   @override
@@ -105,24 +101,52 @@ class HiveServiceImplementation implements HiveService {
       String details,
       String importance,
       TimeOfDay timeOfDay) {
-    // TODO: implement changeReminder
+    var desiredKey = getProfileKey(profileName);
+    ProfilesModel? profile = Boxes.getProfiles().get(desiredKey);
+
+    List<ReminderPageModel> newList = [];
+
+    for (var element in profile!.reminders) {
+      if (element.name != name) {
+        newList.add(element);
+      }
+    }
+    ReminderPageModel newReminder = ReminderPageModel(
+        name: name,
+        dosis: dosis,
+        frequency: frequency,
+        importance: importance,
+        details: details,
+        timeOfDay: timeOfDay,
+        status: false);
+    newList.add(newReminder);
+
+    ProfilesModel newProfile = profile.copyWith(reminders: newList);
+    Boxes.getProfiles().put(desiredKey, newProfile);
   }
 
   @override
   ReminderPageModel getReminder(String profileName, String name) {
-    // TODO: implement getReminder
-    throw UnimplementedError();
+    var desiredKey = getProfileKey(profileName);
+    ProfilesModel? profile = Boxes.getProfiles().get(desiredKey);
+    ReminderPageModel reminder =
+        profile!.reminders.firstWhere((element) => element.name == name);
+    return reminder;
   }
 
   @override
-  List<ReminderHomeTile> remindersToday() {
-    // TODO: implement remindersToday
-    throw UnimplementedError();
-  }
+  void removeReminder(String profileName, String name) {
+    var desiredKey = getProfileKey(profileName);
+    ProfilesModel? profile = Boxes.getProfiles().get(desiredKey);
+    List<ReminderPageModel> newList = [];
 
-  @override
-  List<ReminderHomeTile> upcomingReminders() {
-    // TODO: implement upcomingReminders
-    throw UnimplementedError();
+    for (var element in profile!.reminders) {
+      if (element.name != name) {
+        newList.add(element);
+      }
+    }
+
+    ProfilesModel newProfile = profile.copyWith(reminders: newList);
+    Boxes.getProfiles().put(desiredKey, newProfile);
   }
 }
