@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:tabmind/common/providers.dart';
 
 import '../../util/AppColors.dart';
@@ -21,7 +22,7 @@ class CreationPageView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfilesController controller =
         ref.read(providers.profilesControllerProvider.notifier);
-    final List<ProfilesModel> model =
+    final Box<ProfilesModel> model =
         ref.watch(providers.profilesControllerProvider);
 
     //List<Widget> profileList = [];

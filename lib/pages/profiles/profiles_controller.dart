@@ -7,55 +7,39 @@ import 'package:tabmind/pages/profiles/profiles_view.dart';
 import 'package:tabmind/pages/reminderPage/reminderPage_model.dart';
 import 'package:tabmind/ui-kit/reminder_home_tile.dart';
 
+import '../../local_persistence/Boxes.dart';
+
 class ProfilesControllerImplementation extends ProfilesController {
   final HiveServiceImplementation _localPersistenceService;
 
   ProfilesControllerImplementation(
       {required HiveServiceImplementation localPersistenceService,
-      List<ProfilesModel>? model})
+      Box<ProfilesModel>? model})
       : _localPersistenceService = localPersistenceService,
         super(
-          model ?? List<ProfilesModel>.empty(),
+          model ?? Boxes.getProfiles(),
         );
 
   @override
   void addProfile(String name) {
-    ProfilesModel profile = _localPersistenceService.addProfile(name);
-    //ProfilesModel profile =
-    //    ProfilesModel(reminders: [], profileName: name, active: false);
-    state = [...state, profile];
+    _localPersistenceService.addProfile(name);
   }
 
   @override
   void removeProfile(String name) {
     _localPersistenceService.removeProfile(name);
-    state = [
-      for (final profile in state)
-        if (profile.profileName != name) profile,
-    ];
   }
 
   @override
   void changeName(String name, String newName) {
-    List<ProfilesModel> newList = [];
-
-    for (ProfilesModel profile in state) {
-      if (profile.profileName == name) {
-        profile = profile.copyWith(profileName: newName);
-        newList.add(profile);
-      } else {
-        newList.add(profile);
-      }
-    }
-
-    state = newList;
+    _localPersistenceService.changeName(name, newName);
   }
 
   @override
   List<ReminderHomeTile> upcomingReminders() {
     List<ReminderHomeTile> reminderUpcomingHomeTile = [];
 
-    for (ProfilesModel profile in state) {
+    for (ProfilesModel profile in state.values) {
       for (ReminderPageModel r in profile.reminders) {
         reminderUpcomingHomeTile
             .add(ReminderHomeTile(profile.profileName, r.name, r.status));
@@ -83,6 +67,9 @@ class ProfilesControllerImplementation extends ProfilesController {
       String details,
       String importance,
       TimeOfDay timeOfDay) {
+    _localPersistenceService.addReminder(
+        profileName, name, dosis, frequency, details, importance, timeOfDay);
+
     ReminderPageModel newReminder = ReminderPageModel(
         name: name,
         dosis: dosis,
@@ -96,7 +83,7 @@ class ProfilesControllerImplementation extends ProfilesController {
     List<ReminderPageModel> newReminderList = [];
     newReminderList.add(newReminder);
 
-    for (ProfilesModel profile in state) {
+    for (ProfilesModel profile in state.values) {
       if (profile.profileName == profileName) {
         for (ReminderPageModel r in profile.reminders) {
           newReminderList.add(r);
@@ -107,7 +94,6 @@ class ProfilesControllerImplementation extends ProfilesController {
         newList.add(profile);
       }
     }
-    state = newList;
   }
 
   @override
@@ -124,10 +110,18 @@ class ProfilesControllerImplementation extends ProfilesController {
 
   @override
   ReminderPageModel getReminder(String profileName, String name) {
-    return state
-        .firstWhere((element) => element.profileName == profileName)
-        .reminders
-        .firstWhere((element) => element.name == name);
+    // return state
+    //     .firstWhere((element) => element.profileName == profileName)
+    //     .reminders
+    //     .firstWhere((element) => element.name == name);
+    return ReminderPageModel(
+        name: "name",
+        dosis: "dosis",
+        frequency: "frequency",
+        importance: "importance",
+        details: "details",
+        timeOfDay: TimeOfDay.now(),
+        status: false);
   }
 
   @override
@@ -135,7 +129,7 @@ class ProfilesControllerImplementation extends ProfilesController {
     List<ProfilesModel> newList = [];
     List<ReminderPageModel> newReminderList = [];
 
-    for (ProfilesModel profile in state) {
+    for (ProfilesModel profile in state.values) {
       if (profile.profileName == profileName) {
         for (ReminderPageModel r in profile.reminders) {
           if (r.name != name) {
@@ -148,11 +142,9 @@ class ProfilesControllerImplementation extends ProfilesController {
         newList.add(profile);
       }
     }
-    state = newList;
   }
 
   @override
   void initProfiles(Box<ProfilesModel> profiles) {
-    state = profiles.values.toList().cast<ProfilesModel>();
   }
 }

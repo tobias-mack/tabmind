@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:tabmind/pages/reminderDetails/reminderDetails_view.dart';
 
 import '../common/providers.dart';
@@ -19,7 +20,7 @@ class ReminderHomeTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfilesController controller =
         ref.read(providers.profilesControllerProvider.notifier);
-    final List<ProfilesModel> model =
+    final Box<ProfilesModel> model =
         ref.watch(providers.profilesControllerProvider);
 
     var reminder = controller.getReminder(profilName, name);

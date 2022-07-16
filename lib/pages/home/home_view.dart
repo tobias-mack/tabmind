@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:tabmind/ui-kit/reminder_home_tile.dart';
 
 import '../../common/providers.dart';
+import '../../local_persistence/Boxes.dart';
 import '../../ui-kit/profile_home_tile.dart';
 import '../../util/AppColors.dart';
 import '../profiles/profiles_model.dart';
@@ -16,7 +19,7 @@ class HomeView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfilesController controller =
         ref.read(providers.profilesControllerProvider.notifier);
-    final List<ProfilesModel> model =
+    final Box<ProfilesModel> model =
         ref.watch(providers.profilesControllerProvider);
 
     return Scaffold(
@@ -57,79 +60,93 @@ class HomeView extends ConsumerWidget {
                   physics: BouncingScrollPhysics(),
                   child: Container(
                     child: SafeArea(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 40),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Text(
-                                  "All Reminders",
-                                  style: Theme.of(context).textTheme.headline6,
-                                ),
-                              ),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                physics: BouncingScrollPhysics(),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                ),
-                                child: Row(
+                      child: ValueListenableBuilder(
+                          valueListenable: Boxes.getProfiles().listenable(),
+                          builder: (context, box, _) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 40),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    for (int i = 0; i <= model.length - 1; i++)
-                                      Row(
+                                    Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Text(
+                                        "All Reminders",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
+                                      ),
+                                    ),
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      physics: BouncingScrollPhysics(),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                      ),
+                                      child: Row(
                                         children: [
-                                          ProfileHomeTile(
-                                              image: const AssetImage(
-                                                  "assets/images/bell.PNG"),
-                                              profileName:
-                                                  model[i].profileName),
-                                          const SizedBox(width: 16),
+                                          for (int i = 0;
+                                              i <= model.length - 1;
+                                              i++)
+                                            Row(
+                                              children: [
+                                                ProfileHomeTile(
+                                                    image: const AssetImage(
+                                                        "assets/images/bell.PNG"),
+                                                    profileName: controller
+                                                        .state.values
+                                                        .elementAt(i)
+                                                        .profileName),
+                                                const SizedBox(width: 16),
+                                              ],
+                                            )
                                         ],
-                                      )
+                                      ),
+                                    )
                                   ],
                                 ),
-                              )
-                            ],
-                          ),
-                          SizedBox(height: 16),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Text(
-                                  "Upcoming Reminders",
-                                  style: Theme.of(context).textTheme.headline6,
+                                SizedBox(height: 16),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Text(
+                                        "Upcoming Reminders",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
+                                      ),
+                                    ),
+                                    for (ReminderHomeTile upcomingReminder
+                                        in controller.upcomingReminders())
+                                      upcomingReminder
+                                  ],
                                 ),
-                              ),
-                              for (ReminderHomeTile upcomingReminder
-                                  in controller.upcomingReminders())
-                                upcomingReminder
-                            ],
-                          ),
-                          SizedBox(height: 16),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Text(
-                                  "Reminders Today",
-                                  style: Theme.of(context).textTheme.headline6,
+                                SizedBox(height: 16),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Text(
+                                        "Reminders Today",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
+                                      ),
+                                    ),
+                                    for (ReminderHomeTile upcomingReminder
+                                        in controller.remindersToday())
+                                      upcomingReminder
+                                  ],
                                 ),
-                              ),
-                              for (ReminderHomeTile upcomingReminder
-                                  in controller.remindersToday())
-                                upcomingReminder
-                            ],
-                          ),
-                        ],
-                      ),
+                              ],
+                            );
+                          }),
                     ),
                   ),
                 )

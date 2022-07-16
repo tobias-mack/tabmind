@@ -20,7 +20,7 @@ class ProfilesView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfilesController controller =
         ref.read(providers.profilesControllerProvider.notifier);
-    final List<ProfilesModel> model =
+    final Box<ProfilesModel> model =
         ref.watch(providers.profilesControllerProvider);
 
     return Scaffold(
@@ -56,10 +56,6 @@ class ProfilesView extends ConsumerWidget {
                 valueListenable: Boxes.getProfiles().listenable(),
                 builder: (context, box, _) {
                   final profiles = box.values.toList().cast<ProfilesModel>();
-                  List<ProfileTile> list = [];
-                  for (int i = 0; i <= profiles.length - 1; i++)
-                    list.add(ProfileTile(
-                        profiles[i].profileName, profiles[i].active));
                   return Column(
                     children: [
                       for (int i = 0; i <= profiles.length - 1; i++)
@@ -74,8 +70,8 @@ class ProfilesView extends ConsumerWidget {
   }
 }
 
-abstract class ProfilesController extends StateNotifier<List<ProfilesModel>> {
-  ProfilesController(List<ProfilesModel> state) : super(state);
+abstract class ProfilesController extends StateNotifier<Box<ProfilesModel>> {
+  ProfilesController(Box<ProfilesModel> state) : super(state);
 
   void addProfile(String name);
 

@@ -16,12 +16,25 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ReminderPageModel {
+  @HiveField(0)
   String get name => throw _privateConstructorUsedError;
+
+  @HiveField(1)
   String get dosis => throw _privateConstructorUsedError;
+
+  @HiveField(2)
   String get frequency => throw _privateConstructorUsedError;
+
+  @HiveField(3)
   String get importance => throw _privateConstructorUsedError;
+
+  @HiveField(4)
   String get details => throw _privateConstructorUsedError;
+
+  @HiveField(5)
   TimeOfDay get timeOfDay => throw _privateConstructorUsedError;
+
+  @HiveField(6)
   bool get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -34,14 +47,15 @@ abstract class $ReminderPageModelCopyWith<$Res> {
   factory $ReminderPageModelCopyWith(
           ReminderPageModel value, $Res Function(ReminderPageModel) then) =
       _$ReminderPageModelCopyWithImpl<$Res>;
+
   $Res call(
-      {String name,
-      String dosis,
-      String frequency,
-      String importance,
-      String details,
-      TimeOfDay timeOfDay,
-      bool status});
+      {@HiveField(0) String name,
+      @HiveField(1) String dosis,
+      @HiveField(2) String frequency,
+      @HiveField(3) String importance,
+      @HiveField(4) String details,
+      @HiveField(5) TimeOfDay timeOfDay,
+      @HiveField(6) bool status});
 }
 
 /// @nodoc
@@ -102,15 +116,16 @@ abstract class _$$_ReminderPageModelCopyWith<$Res>
   factory _$$_ReminderPageModelCopyWith(_$_ReminderPageModel value,
           $Res Function(_$_ReminderPageModel) then) =
       __$$_ReminderPageModelCopyWithImpl<$Res>;
+
   @override
   $Res call(
-      {String name,
-      String dosis,
-      String frequency,
-      String importance,
-      String details,
-      TimeOfDay timeOfDay,
-      bool status});
+      {@HiveField(0) String name,
+      @HiveField(1) String dosis,
+      @HiveField(2) String frequency,
+      @HiveField(3) String importance,
+      @HiveField(4) String details,
+      @HiveField(5) TimeOfDay timeOfDay,
+      @HiveField(6) bool status});
 }
 
 /// @nodoc
@@ -169,29 +184,37 @@ class __$$_ReminderPageModelCopyWithImpl<$Res>
 
 /// @nodoc
 
+@HiveType(typeId: 1, adapterName: 'ReminderPageModelAdapter')
 class _$_ReminderPageModel implements _ReminderPageModel {
   const _$_ReminderPageModel(
-      {required this.name,
-      required this.dosis,
-      required this.frequency,
-      required this.importance,
-      required this.details,
-      required this.timeOfDay,
-      required this.status});
+      {@HiveField(0) required this.name,
+      @HiveField(1) required this.dosis,
+      @HiveField(2) required this.frequency,
+      @HiveField(3) required this.importance,
+      @HiveField(4) required this.details,
+      @HiveField(5) required this.timeOfDay,
+      @HiveField(6) required this.status});
 
   @override
+  @HiveField(0)
   final String name;
   @override
+  @HiveField(1)
   final String dosis;
   @override
+  @HiveField(2)
   final String frequency;
   @override
+  @HiveField(3)
   final String importance;
   @override
+  @HiveField(4)
   final String details;
   @override
+  @HiveField(5)
   final TimeOfDay timeOfDay;
   @override
+  @HiveField(6)
   final bool status;
 
   @override
@@ -234,27 +257,40 @@ class _$_ReminderPageModel implements _ReminderPageModel {
 
 abstract class _ReminderPageModel implements ReminderPageModel {
   const factory _ReminderPageModel(
-      {required final String name,
-      required final String dosis,
-      required final String frequency,
-      required final String importance,
-      required final String details,
-      required final TimeOfDay timeOfDay,
-      required final bool status}) = _$_ReminderPageModel;
+      {@HiveField(0) required final String name,
+      @HiveField(1) required final String dosis,
+      @HiveField(2) required final String frequency,
+      @HiveField(3) required final String importance,
+      @HiveField(4) required final String details,
+      @HiveField(5) required final TimeOfDay timeOfDay,
+      @HiveField(6) required final bool status}) = _$_ReminderPageModel;
 
   @override
+  @HiveField(0)
   String get name => throw _privateConstructorUsedError;
+
   @override
+  @HiveField(1)
   String get dosis => throw _privateConstructorUsedError;
+
   @override
+  @HiveField(2)
   String get frequency => throw _privateConstructorUsedError;
+
   @override
+  @HiveField(3)
   String get importance => throw _privateConstructorUsedError;
+
   @override
+  @HiveField(4)
   String get details => throw _privateConstructorUsedError;
+
   @override
+  @HiveField(5)
   TimeOfDay get timeOfDay => throw _privateConstructorUsedError;
+
   @override
+  @HiveField(6)
   bool get status => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

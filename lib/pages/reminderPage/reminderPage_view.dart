@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:tabmind/pages/creationPage/creationPage_view.dart';
 
 import '../../common/providers.dart';
+import '../../local_persistence/Boxes.dart';
 import '../../ui-kit/reminder_tile.dart';
 import '../../util/AppColors.dart';
 import '../profiles/profiles_model.dart';
@@ -16,7 +19,7 @@ class ReminderPageView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfilesController controller =
         ref.read(providers.profilesControllerProvider.notifier);
-    final List<ProfilesModel> model =
+    final Box<ProfilesModel> model =
         ref.watch(providers.profilesControllerProvider);
 
     return DefaultTabController(
@@ -35,53 +38,66 @@ class ReminderPageView extends ConsumerWidget {
             labelColor: Colors.black,
             indicatorColor: accentColor,
             tabs: <Widget>[
-              for (int i = 0; i <= model.length - 1; i++)
+              for (int i = 0; i <= model.values.length - 1; i++)
                 Tab(
-                  text: model[i].profileName,
+                  text: model.values.elementAt(i).profileName,
                 ),
             ],
           ),
         ),
-        body: TabBarView(
-          children: <Widget>[
-            for (int i = 0; i <= model.length - 1; i++)
-              SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text("Your Reminders",
-                            style: Theme.of(context).textTheme.headline6),
-                      ),
-                      for (ReminderPageModel reminder in model[i].reminders)
-                        ReminderTile(model[i].profileName, reminder.name,
-                            reminder.status),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 50, bottom: 50),
+        body: ValueListenableBuilder<Box<ProfilesModel>>(
+            valueListenable: Boxes.getProfiles().listenable(),
+            builder: (context, box, _) {
+              final profiles = box.values.toList().cast<ProfilesModel>();
+              return TabBarView(
+                children: <Widget>[
+                  for (int i = 0; i <= profiles.length - 1; i++)
+                    SingleChildScrollView(
+                      child: Center(
                         child: Column(
-                          children: [
-                            Center(
-                              child: FloatingActionButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => CreationPageView(
-                                          model[i].profileName)));
-                                },
-                                backgroundColor: accentColor,
-                                child: Icon(Icons.add),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text("Your Reminders",
+                                  style: Theme.of(context).textTheme.headline6),
+                            ),
+                            for (ReminderPageModel reminder
+                                in model.values.elementAt(i).reminders)
+                              ReminderTile(
+                                  model.values.elementAt(i).profileName,
+                                  reminder.name,
+                                  reminder.status),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 50, bottom: 50),
+                              child: Column(
+                                children: [
+                                  Center(
+                                    child: FloatingActionButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CreationPageView(model
+                                                        .values
+                                                        .elementAt(i)
+                                                        .profileName)));
+                                      },
+                                      backgroundColor: accentColor,
+                                      child: Icon(Icons.add),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-          ],
-        ),
+                    ),
+                ],
+              );
+            }),
 
         //floatingActionButton: FloatingActionButton(
         //  onPressed:  () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreationPageView()));},

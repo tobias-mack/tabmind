@@ -18,10 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ProfilesModel {
   @HiveField(0)
   String get profileName => throw _privateConstructorUsedError;
-
   @HiveField(1)
   bool get active => throw _privateConstructorUsedError;
-
   @HiveField(2)
   List<ReminderPageModel> get reminders => throw _privateConstructorUsedError;
 
@@ -35,7 +33,6 @@ abstract class $ProfilesModelCopyWith<$Res> {
   factory $ProfilesModelCopyWith(
           ProfilesModel value, $Res Function(ProfilesModel) then) =
       _$ProfilesModelCopyWithImpl<$Res>;
-
   $Res call(
       {@HiveField(0) String profileName,
       @HiveField(1) bool active,
@@ -80,7 +77,6 @@ abstract class _$$_ProfilesModelCopyWith<$Res>
   factory _$$_ProfilesModelCopyWith(
           _$_ProfilesModel value, $Res Function(_$_ProfilesModel) then) =
       __$$_ProfilesModelCopyWithImpl<$Res>;
-
   @override
   $Res call(
       {@HiveField(0) String profileName,
@@ -139,7 +135,6 @@ class _$_ProfilesModel implements _ProfilesModel {
   @HiveField(1)
   final bool active;
   final List<ReminderPageModel> _reminders;
-
   @override
   @HiveField(2)
   List<ReminderPageModel> get reminders {
@@ -187,11 +182,9 @@ abstract class _ProfilesModel implements ProfilesModel {
   @override
   @HiveField(0)
   String get profileName => throw _privateConstructorUsedError;
-
   @override
   @HiveField(1)
   bool get active => throw _privateConstructorUsedError;
-
   @override
   @HiveField(2)
   List<ReminderPageModel> get reminders => throw _privateConstructorUsedError;

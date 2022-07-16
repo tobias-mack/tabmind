@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 
 import '../common/providers.dart';
 import '../pages/profiles/profiles_model.dart';
@@ -16,7 +17,7 @@ class ProfileTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfilesController controller =
         ref.read(providers.profilesControllerProvider.notifier);
-    final List<ProfilesModel> model =
+    final Box<ProfilesModel> model =
         ref.watch(providers.profilesControllerProvider);
 
     return GestureDetector(
@@ -55,10 +56,10 @@ class ProfileTile extends ConsumerWidget {
   }
 
   void profileActivated(
-      bool value, List<ProfilesModel> model, ProfilesController controller) {
+      bool value, Box<ProfilesModel> model, ProfilesController controller) {
     List<ProfilesModel> newList = [];
 
-    for (ProfilesModel profile in model) {
+    for (ProfilesModel profile in model.values) {
       if (profile.profileName == name) {
         profile = profile.copyWith(active: value);
         newList.add(profile);
@@ -66,8 +67,7 @@ class ProfileTile extends ConsumerWidget {
         newList.add(profile);
       }
     }
-
+//TODO: aaa
     switcher = value;
-    controller.state = newList;
   }
 }

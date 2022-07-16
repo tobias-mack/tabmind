@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:tabmind/pages/calendar/calendar_controller.dart';
 import 'package:tabmind/pages/calendar/calendar_model.dart';
 import 'package:tabmind/pages/calendar/calendar_view.dart';
@@ -49,10 +50,11 @@ class Providers {
       Provider<HiveServiceImplementation>(
           (ProviderRef ref) => HiveServiceImplementation());
 
-  final StateNotifierProvider<ProfilesController, List<ProfilesModel>>
+  final StateNotifierProvider<ProfilesController,
+          Box<ProfilesModel>> //Box<ProfileModel> ...
       profilesControllerProvider =
-      StateNotifierProvider<ProfilesController, List<ProfilesModel>>(
+      StateNotifierProvider<ProfilesController, Box<ProfilesModel>>(
           (StateNotifierProviderRef ref) => ProfilesControllerImplementation(
               localPersistenceService:
-                  ref.read(providers.localPersistenceProvider)));
+                  ref.watch(providers.localPersistenceProvider)));
 }

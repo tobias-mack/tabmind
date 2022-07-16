@@ -1,5 +1,6 @@
 import 'package:flutter/src/material/time.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tabmind/local_persistence/hive_service.dart';
 import 'package:tabmind/pages/profiles/profiles_model.dart';
@@ -17,6 +18,8 @@ class HiveServiceImplementation implements HiveService {
   initHive() async {
     await Hive.initFlutter();
     Hive.registerAdapter(ProfileModelAdapter());
+    Hive.registerAdapter(ReminderPageModelAdapter());
+    Hive.registerAdapter(TimeOfDayAdapter());
     await Hive.openBox<ProfilesModel>(boxName);
   }
 
@@ -38,32 +41,59 @@ class HiveServiceImplementation implements HiveService {
 
   @override
   void removeProfile(String name) {
-    final Map<dynamic, ProfilesModel> deliveriesMap =
-        Boxes.getProfiles().toMap();
+    var desiredKey = getProfileKey(name);
+    Boxes.getProfiles().delete(desiredKey);
+  }
+
+  getProfileKey(String name) {
+    final Map<dynamic, ProfilesModel> profilesMap = Boxes.getProfiles().toMap();
     dynamic desiredKey;
-    deliveriesMap.forEach((key, value) {
+    profilesMap.forEach((key, value) {
       if (value.profileName == name) {
         desiredKey = key;
       }
     });
-    Boxes.getProfiles().delete(desiredKey);
+    return desiredKey;
   }
 
   @override
-  void addReminder(
+  Future<void> addReminder(
       String profileName,
       String name,
       String dosis,
       String frequency,
       String details,
       String importance,
-      TimeOfDay timeOfDay) {
-    // TODO: implement addReminder mit Tim
+      TimeOfDay timeOfDay) async {
+    var desiredKey = getProfileKey(profileName);
+    ProfilesModel? profile = Boxes.getProfiles().get(desiredKey);
+    ReminderPageModel newReminder = ReminderPageModel(
+        name: name,
+        dosis: dosis,
+        frequency: frequency,
+        importance: importance,
+        details: details,
+        timeOfDay: timeOfDay,
+        status: false);
+    //profile?.reminders.add(newReminder);
+
+    List<ReminderPageModel> newList = [];
+    newList.add(newReminder);
+    for (var element in profile!.reminders) {
+      newList.add(element);
+    }
+    ProfilesModel newProfile = profile.copyWith(reminders: newList);
+    //Boxes.getProfiles().delete(desiredKey);
+    //Boxes.getProfiles().add(newProfile!);
+    await Boxes.getProfiles().put(desiredKey, newProfile);
   }
 
   @override
   void changeName(String name, String newName) {
-    // TODO: implement changeName
+    var desiredKey = getProfileKey(name);
+    ProfilesModel? profile = Boxes.getProfiles().get(desiredKey);
+    ProfilesModel? newProfile = profile?.copyWith(profileName: newName);
+    Boxes.getProfiles().put(desiredKey, newProfile!);
   }
 
   @override

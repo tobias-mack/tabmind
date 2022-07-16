@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 
 import '../common/providers.dart';
 import '../pages/profiles/profiles_model.dart';
@@ -20,7 +21,7 @@ class ReminderTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfilesController controller =
         ref.read(providers.profilesControllerProvider.notifier);
-    final List<ProfilesModel> model =
+    final Box<ProfilesModel> model =
         ref.watch(providers.profilesControllerProvider);
 
     return GestureDetector(
@@ -69,7 +70,7 @@ class ReminderTile extends ConsumerWidget {
   }
 
   void reminderActivated(
-      bool value, List<ProfilesModel> model, ProfilesController controller) {
+      bool value, Box<ProfilesModel> model, ProfilesController controller) {
     ReminderPageModel newReminder =
         controller.getReminder(profileName, name).copyWith(status: value);
 
@@ -77,7 +78,7 @@ class ReminderTile extends ConsumerWidget {
     List<ReminderPageModel> newReminderList = [];
     newReminderList.add(newReminder);
 
-    for (ProfilesModel profile in controller.state) {
+    for (ProfilesModel profile in controller.state.values) {
       if (profile.profileName == profileName) {
         for (ReminderPageModel r in profile.reminders) {
           if (r.name != name) {
@@ -90,8 +91,7 @@ class ReminderTile extends ConsumerWidget {
         newList.add(profile);
       }
     }
-
+//TODO: aaall
     switcher = value;
-    controller.state = newList;
   }
 }
