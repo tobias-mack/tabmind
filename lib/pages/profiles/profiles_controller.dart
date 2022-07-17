@@ -54,8 +54,20 @@ class ProfilesControllerImplementation extends ProfilesController {
 
   @override
   List<ReminderHomeTile> remindersToday() {
-    // TODO: implement remindersToday
-    return [];
+    // MOCK IMPLEMENTATION
+    List<ReminderHomeTile> reminderUpcomingHomeTile = [];
+
+    for (ProfilesModel profile in state.values) {
+      for (ReminderPageModel r in profile.reminders) {
+        reminderUpcomingHomeTile
+            .add(ReminderHomeTile(profile.profileName, r.name, r.status));
+      }
+    }
+    // TODO: implementation not working, timeOfDay not correct
+    reminderUpcomingHomeTile
+        .sort((a, b) => a.timeOfDay.hour.compareTo(b.timeOfDay.hour));
+
+    return reminderUpcomingHomeTile;
   }
 
   @override
