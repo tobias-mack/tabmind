@@ -2,6 +2,7 @@ import 'package:flutter/src/material/time.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tabmind/local_notifications/NotificationApi.dart';
 import 'package:tabmind/local_persistence/hive_service.dart';
 import 'package:tabmind/pages/profiles/profiles_model.dart';
 import 'package:tabmind/pages/reminderPage/reminderPage_model.dart';
@@ -81,6 +82,8 @@ class HiveServiceImplementation implements HiveService {
     }
     ProfilesModel newProfile = profile.copyWith(reminders: newList);
     Boxes.getProfiles().put(desiredKey, newProfile);
+    NotificationApi.showNotification(
+        title: name, body: dosis, payload: details);
   }
 
   @override
