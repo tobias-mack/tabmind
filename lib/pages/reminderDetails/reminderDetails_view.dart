@@ -25,7 +25,7 @@ class ReminderDetailsView extends ConsumerWidget {
     final controllerName = TextEditingController(text: reminder.name);
     final controllerDosis = TextEditingController(text: reminder.dosis);
     final controllerFrequency = TextEditingController(text: reminder.frequency);
-    final controllerNotes = TextEditingController(text: reminder.details);
+    final controllerNotes = TextEditingController(text: reminder.timeOfDay.hour.toString() + reminder.timeOfDay.minute.toString());
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

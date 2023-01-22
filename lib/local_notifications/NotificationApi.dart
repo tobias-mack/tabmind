@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:timezone/timezone.dart'as tz;
 
 class NotificationApi {
   static final _notifications = FlutterLocalNotificationsPlugin();
@@ -32,4 +33,33 @@ class NotificationApi {
           {int id = 0, String? title, String? body, String? payload}) async =>
       _notifications.show(id, title, body, await _notificationDetails(),
           payload: payload);
+
+  static Future scheduleNotification({
+    int id = 0,
+    String? title,
+    String? body,
+    String? payload,
+    required DateTime scheduledDate,
+  }) async =>
+      _notifications.zonedSchedule(
+          id,
+          title,
+          body,
+          _scheduleDaily(Time(scheduledDate.hour, scheduledDate.minute)),
+          await _notificationDetails(),
+          payload: payload,
+          androidAllowWhileIdle: true,
+          uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+          matchDateTimeComponents: DateTimeComponents.time,
+      );
+
+  static tz.TZDateTime _scheduleDaily(Time time) {
+    final now = tz.TZDateTime.now(tz.local);
+    final scheduledDate = tz.TZDateTime(tz.local,now.year, now.month, now.day, time.hour, time.minute);
+
+    return scheduledDate.isBefore(now)? scheduledDate.add(Duration(days: 1)) : scheduledDate;
+  }
+
+
 }
