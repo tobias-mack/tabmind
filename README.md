@@ -1,10 +1,11 @@
 
-title: tabmind
+*title: tabmind
 subtitle: Dokumentation
 author: Mack,Graff, Schmidt
 date: 17.07.2022
-lang: de
+lang: de*
 
+![Wireframes](https://github.com/tobias-mack/tabmind/blob/Local_Notifications%2B%2B/Wireframes.PNG)
 
 ## Einleitung
 Tabmind soll eine einfache App für Erinnerungen an Tabletten sein. Warum braucht man überhaupt eine App dafür? Viele Menschen müssen täglich Medikamente nehmen, vergessen dies jedoch gelegentlich. Laut einer Studie werden etwa ein Drittel der verschrieben Medikamente nicht genommen[[SDZ]](#1).Dazu kommen Menschen, die Andere pflegen und sich auch um ihre Tabletten kümmern müssen. Die Hauptzielgruppen von Tabmind sind ältere Menschen, Pflegende sowie Frauen, die täglich die Pille nehmen. Für diese Zielgruppen wurden bestimmte Funktionalitäten überdacht und in die App integriert.
@@ -44,6 +45,7 @@ Für die Architektur wurde ein Model-View-Controller Ansatz gewählt. So hat man
 Um den State der App zu managen, wurde die externe Bibliothek Riverpod eingebunden. Da in der App alles von den Profilen abhängt, benötigen wir für die Hauptfunktionalität nur einen Provider. Um die verschiedenen Reminder zu managen verwenden wir Riverpod Family, wie auch im Vorlesungscode vorgegeben. Über diesen Provider können verschiedene Seiten der App auf alle Reminder zugreifen und diese bearbeiten. Als Basis wird das CreationPageModel verwendet, die Daten für Reminder enthält. Über den Controller lassen sich dann neue Reminder erstellen und einer Liste hinzufügen.
 Alle Seiten, die Reminder beinhalten, müssen also auf diesen Provider zugreifen.
 
+![Relation Model](https://github.com/tobias-mack/tabmind/blob/Local_Notifications%2B%2B/relation.png)
 
 ## 3. Datenpersistenz
 Für die Datenpersistenz wurde die lokale Datenbank Hive verwendet. Es wurde eine Datenbank erstellt, die die angelegten Profile mit den zugehörigen Remindern persistiert. 
@@ -62,6 +64,10 @@ Mit der SliverAppBar in Verbindung mit FlexibleSpaceBar konnte ein dynamisches S
 
 #### Dismissible
 Das Dismissible Widget wird verwendet um Profile und Reminder, durch Ziehen in die angegebene Richtung, zu löschen. Das Ziehen des Widgets in die DismissDirection bewirkt, dass das Kind aus der Ansicht gleitet. 
+
+
+![Light Mode](https://github.com/tobias-mack/tabmind/blob/Local_Notifications%2B%2B/light1.PNG)
+![Dark Mode](https://github.com/tobias-mack/tabmind/blob/Local_Notifications%2B%2B/dark1.PNG)
 
 
 # References
